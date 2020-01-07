@@ -1,24 +1,28 @@
 var MainUI = function(w,h){
-	this.w = w;
-	this.h = h;
 	this.controls = null;
 	
 	this.bind = function(model){
-		this.model = model;
+		for (let i=0; i<this.controls.length; i++){
+			for (let j=0; j<this.controls[i].length; j++){
+				if (this.controls[i][j].bind != null){
+					this.controls[i][j].bind(model);
+				}
+			}
+		}
 	}
 	
-	this.addControls = function(drawMode, control){
+	this.addControl = function(drawMode, control){
 		if (this.controls[drawMode] == null) this.controls[drawMode] = [];
 		this.controls[drawMode].push(control);
 	}
 	
 	this.draw = function(){
-		for (let i=0; i< this.controls[model.drawMode].length; i++){
-			this.controls[drawMode][i].draw();
+		for (let i=0; i< this.controls[this.model.drawMode].length; i++){
+			this.controls[this.model.drawMode][i].draw();
 		}
 	}
 	
-	this.onClicked(mx, my){
+	this.onClicked = function(mx, my){
 		for (let i=0; i< this.controls[model.drawMode].length; i++){
 			if (this.isInBound({"x":mx, "y":my}, this.controls[drawMode][i])){
 				this.controls[drawMode][i].onClicked(mx,my);
