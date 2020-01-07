@@ -22,16 +22,16 @@ var BoardUI = function (x,y,w,h){
 		
 		// draw tiles
 		if(this.model !=null){
-			for(let r = 0; r < this.model.nRows; r++){
-				for(let c = 0; c < this.model.nCols; c++){
-					if(this.model.map.cell[r][c].cellType=="normal"){
-						img(r*30, c*30, tiles[this.map.cells[r][c].value - 1]);
-					} else if (this.model.map.cell[r][c].cellType == "start"){
-						img(r*30, c*30, tiles[4]);
-					} else if (this.model.map.cell[r][c].cellType == "gate"){
-						img(r*30, c*30, tiles[5]);
+			for(let r = 0; r < this.model.board.nRows; r++){
+				for(let c = 0; c < this.model.board.nCols; c++){
+					if(this.model.board.cells[r][c].cellType=="normal"){
+						image(this.tiles[this.model.board.cells[r][c].value - 1], r*30, c*30);
+					} else if (this.model.board.cells[r][c].cellType == "start"){
+						image(this.tiles[4], r*30, c*30);
+					} else if (this.model.board.cells[r][c].cellType == "gate"){
+						image(this.tiles[5], r*30, c*30);
 					} else {
-						img(r*30, c*30, tiles[6]);
+						image(this.tiles[6], r*30, c*30);
 					}
 				}
 			}
