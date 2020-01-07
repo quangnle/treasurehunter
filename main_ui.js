@@ -20,7 +20,9 @@ var MainUI = function(w,h){
 	
 	this.onClicked(mx, my){
 		for (let i=0; i< this.controls[model.drawMode].length; i++){
-			if (this.controls[drawMode][i])
+			if (this.isInBound({"x":mx, "y":my}, this.controls[drawMode][i])){
+				this.controls[drawMode][i].onClicked(mx,my);
+			}
 		}
 	}
 	
