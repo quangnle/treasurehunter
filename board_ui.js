@@ -23,7 +23,7 @@ var BoardUI = function (x,y,w,h){
 		// draw tiles
 		if(this.model !=null){
 			for(let r = 0; r < this.model.board.nRows; r++){
-				for(let c = 0; c < this.model.board.nCols; c++){
+				for(let c = 0; c < this.model.board.nCols; c++){					
 					if(this.model.board.cells[r][c].cellType=="normal"){
 						image(this.tiles[this.model.board.cells[r][c].value - 1], r*30, c*30);
 					} else if (this.model.board.cells[r][c].cellType == "start"){
@@ -32,8 +32,14 @@ var BoardUI = function (x,y,w,h){
 						image(this.tiles[5], r*30, c*30);
 					} else {
 						image(this.tiles[6], r*30, c*30);
-					}
+					}					
 				}
+			}
+			
+			stroke("#ddd");
+			for(let i = 0; i<=21; i++){
+				line(0,i*30,630,i*30);
+				line(i*30,0,i*30,630);
 			}
 		}
 		
