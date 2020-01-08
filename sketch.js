@@ -9,6 +9,8 @@ function setup(){
 	
 	let boardui = new BoardUI(0,0,630,630);	
 	boardui.initTileImages();	
+	boardui.initPlayerImages();
+	
 	mainui.addControl("game", boardui);
 	mainui.bind(model);
 	
