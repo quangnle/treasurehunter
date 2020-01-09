@@ -1,15 +1,16 @@
-var ButtonUI = function(x,y,w,h,caption){
+var ButtonUI = function(x,y,w,h,caption,fillColor){
 	this.x = x;
 	this.y = y;
 	this.w = w;
 	this.h = h;
 	this.caption = caption;
+	this.fillColor = fillColor;
 	
 	this.draw = function(){
 		push();
 		translate(this.x, this.y);
 		
-		fill("#aaa");
+		fill(this.fillColor);
         rect(0, 0, this.w, this.h);
 
         fill(0);

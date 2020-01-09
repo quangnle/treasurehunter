@@ -42,6 +42,22 @@ var Board = function(nRows, nCols){
 			}
 		}
 		
+		// now, place special items on map
+		// treasure
+		this.cells[10][10].cellType = "treasure";
+		
+		// starts
+		this.cells[0][0].cellType = "start";
+		this.cells[20][0].cellType = "start";
+		this.cells[0][20].cellType = "start";
+		this.cells[20][20].cellType = "start";
+		
+		// gates
+		this.cells[3][3].cellType = "gate";
+		this.cells[3][17].cellType = "gate";
+		this.cells[17][3].cellType = "gate";
+		this.cells[17][17].cellType = "gate";
+		
 		// create players
 		let player1 = new Player("Quang", 100000, 0, 0);
 		let player2 = new Player("Quoc", 100000, 0, 20);

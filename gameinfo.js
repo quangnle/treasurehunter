@@ -3,4 +3,5 @@ var GameInfo = function(){
 	this.curPlayer = null;
 	this.board = null;	
 	this.drawMode = "game";
+	this.dice = 1;
 }

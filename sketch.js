@@ -1,6 +1,16 @@
 var processor = null;
 var mainui = new MainUI();
 
+
+	
+function isInBound(pos, region){
+	if ((pos.x > region.x && pos.x < region.x + region.w) && 
+		(pos.x > region.y && pos.x < region.y + region.h)) 
+		return true;
+		
+	return false;
+}
+
 function setup(){
 	createCanvas(1200, 800);
 	let model = new GameInfo();
@@ -12,8 +22,11 @@ function setup(){
 	let boardui = new BoardUI(0,0,630,630);	
 	boardui.initTileImages();	
 	boardui.initPlayerImages();	
-	
 	mainui.addControl("game", boardui);
+	
+	let dicepaneui = new DicePaneUI(640,0,150,140)
+	mainui.addControl("game", dicepaneui);
+	
 	mainui.bind(model);
 	
 	processor = new Processor(model);

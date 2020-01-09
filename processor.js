@@ -6,7 +6,7 @@ var Processor = function(model){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r - 1][curPlayer.c];
-			if (curPlayer.rolledValue >= cell.value){
+			if (curPlayer.actionPoints >= cell.value){
 				this.enterCell(curPlayer, cell, this.model.board.players);
 			}
 		}
@@ -16,7 +16,7 @@ var Processor = function(model){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r + 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r + 1][curPlayer.c];
-			if (curPlayer.rolledValue >= cell.value){
+			if (curPlayer.actionPoints >= cell.value){
 				this.enterCell(curPlayer, cell, this.model.board.players);
 			}
 		}
@@ -26,7 +26,7 @@ var Processor = function(model){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c + 1];
-			if (curPlayer.rolledValue >= cell.value){
+			if (curPlayer.actionPoints >= cell.value){
 				this.enterCell(curPlayer, cell, this.model.board.players);
 			}
 		}
@@ -36,7 +36,7 @@ var Processor = function(model){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c - 1];
-			if (curPlayer.rolledValue >= cell.value){
+			if (curPlayer.actionPoints >= cell.value){
 				this.enterCell(curPlayer, cell, this.model.board.players);
 			}
 		}
@@ -48,12 +48,13 @@ var Processor = function(model){
 		
 		// find all players are standing in the targeted cell
 		for (let i=0; i < this.model.board.players.length; i++){
-			if (players[i].name != player.name && player.r == players[i].r && player.c == players[i].r){
-				overlappedPlayer.push(players[i]);
+			let pi = this.model.board.players[i]
+			if (pi.name != player.name && player.r == pi.r && player.c == pi.c){
+				overlappedPlayer.push(this.model.board.players[i]);
 			}
 		}
 		
-		if (curPlayer.state == "human") {
+		if (player.state == "human") {
 			// grab their money, send them all to hell!!! 
 			for (let i=0; i < overlappedPlayer.length; i++){
 				if (overlappedPlayer[i].state == "evil"){
@@ -73,10 +74,10 @@ var Processor = function(model){
 			if (cell.cellType == "treasure"){
 				// turn other 3 into evil mode
 				// this cell Type is turned into normal
-			} else if (cellType == "start") {
+			} else if (cell.cellType == "start") {
 				// check if this is own start, yes => end game victory
 				// else, mark as one more gate checked-in if enough gate checked => victory
-			} else if (cellType == "gateway") {
+			} else if (cell.cellType == "gateway") {
 				// enable jumping / messagebox show before rolling dice
 			} else {
 				//just move in to this cell
@@ -84,7 +85,7 @@ var Processor = function(model){
 				player.c = cell.c;
 			}
 		} else {
-			if (cellType == "gate") {
+			if (cell.cellType == "gate") {
 				// enable jumping / messagebox show before rolling dice
 			} else {
 				//just move in to this cell
