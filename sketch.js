@@ -24,13 +24,22 @@ function setup(){
 	boardui.initPlayerImages();	
 	mainui.addControl("game", boardui);
 	
-	let dicepaneui = new DicePaneUI(640,0,150,140)
+	let dicepaneui = new DicePaneUI(640,0,150,140);
 	mainui.addControl("game", dicepaneui);
+	
+	let playerpaneui = new PlayerPaneUI(640,150,150,95);
+	mainui.addControl("game", playerpaneui);
 	
 	mainui.bind(model);
 	
 	processor = new Processor(model);
 	
+	// roll dice events handling
+	dicepaneui.onRollMove = processor.rollMove();
+	dicepaneui.onRollJump = processor.rollJump();
+	
+	// endturn event handling
+	playerpaneui.onEndTurn = processor.endTurn();
 }
 
 function draw(){
@@ -46,7 +55,5 @@ function keyPressed(){
 		processor.moveNorth();
 	} else if (keyCode === DOWN_ARROW) {
 		processor.moveSouth();
-	} else {
-		
 	}
 }

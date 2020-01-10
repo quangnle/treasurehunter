@@ -7,6 +7,5 @@ var Player = function(name, money, row, col){
 	this.r = row;
 	this.c = col;
 	
-	this.startPoint = {"r":row, "c":col};
-	
+	this.startPoint = {"r":row, "c":col};	
 }

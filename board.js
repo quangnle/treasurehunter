@@ -17,12 +17,16 @@ var Board = function(nRows, nCols){
 	this.nRows = nRows;
 	this.nCols = nCols;
 	
+	this.starts = [{"r":0, "c":0}, {"r":0, "c":nCols}, {"r":nRows, "c":nCols}, {"r":nRows, "c":0}];
+	
 	this.initMap = function(){
 		
 		for (let r = 0; r < 21; r++){
 			this.cells[r] = [];
 			for (let c = 0; c < 21 ; c++){
 				this.cells[r].push(new Cell("normal", 0));
+				this.cells[r][c].r = r;
+				this.cells[r][c].c = c;
 			}
 		}
 		
@@ -49,20 +53,20 @@ var Board = function(nRows, nCols){
 		// starts
 		this.cells[0][0].cellType = "start";
 		this.cells[20][0].cellType = "start";
-		this.cells[0][20].cellType = "start";
 		this.cells[20][20].cellType = "start";
+		this.cells[0][20].cellType = "start";
 		
 		// gates
 		this.cells[3][3].cellType = "gate";
 		this.cells[3][17].cellType = "gate";
-		this.cells[17][3].cellType = "gate";
 		this.cells[17][17].cellType = "gate";
+		this.cells[17][3].cellType = "gate";
 		
 		// create players
 		let player1 = new Player("Quang", 100000, 0, 0);
 		let player2 = new Player("Quoc", 100000, 0, 20);
-		let player3 = new Player("Phuc", 100000, 20, 0);
-        let player4 = new Player("Nam", 100000, 20,20);
+		let player3 = new Player("Nam", 100000, 20, 20);
+        let player4 = new Player("Phuc", 100000, 20, 0);
 		
         this.players = [player1, player2, player3, player4];
 		

@@ -65,6 +65,11 @@ var BoardUI = function (x,y,w,h){
 				line(0,i*this.cellSize,630,i*this.cellSize);
 				line(i*this.cellSize,0,i*this.cellSize,630);
 			}
+			
+			noFill();
+			stroke(0);	
+			strokeWeight(3);
+			rect(this.model.curPlayer.r * this.cellSize, this.model.curPlayer.c * this.cellSize, this.cellSize, this.cellSize);
 		}
 		
 		pop();

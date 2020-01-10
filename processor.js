@@ -7,7 +7,7 @@ var Processor = function(model){
 		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r - 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
-				this.enterCell(curPlayer, cell, this.model.board.players);
+				this.enterCell(cell);
 			}
 		}
 	}
@@ -17,7 +17,7 @@ var Processor = function(model){
 		if (curPlayer.r + 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r + 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
-				this.enterCell(curPlayer, cell, this.model.board.players);
+				this.enterCell(cell);
 			}
 		}
 	}
@@ -27,7 +27,7 @@ var Processor = function(model){
 		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c + 1];
 			if (curPlayer.actionPoints >= cell.value){
-				this.enterCell(curPlayer, cell, this.model.board.players);
+				this.enterCell(cell);
 			}
 		}
 	}
@@ -37,7 +37,8 @@ var Processor = function(model){
 		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c - 1];
 			if (curPlayer.actionPoints >= cell.value){
-				this.enterCell(curPlayer, cell, this.model.board.players);
+				curlayer.actiontPoints -= cell.vlaue;
+				this.enterCell(cell);
 			}
 		}
 	}
@@ -48,20 +49,20 @@ var Processor = function(model){
 		
 		// find all players are standing in the targeted cell
 		for (let i=0; i < this.model.board.players.length; i++){
-			let pi = this.model.board.players[i]
+			let pi = this.model.board.players[i];
 			if (pi.name != player.name && player.r == pi.r && player.c == pi.c){
 				overlappedPlayer.push(this.model.board.players[i]);
 			}
 		}
 		
 		if (player.state == "human") {
-			// grab their money, send them all to hell!!! 
+			// if human killed evils => grab their money, send them all to hell!!! 
 			for (let i=0; i < overlappedPlayer.length; i++){
 				if (overlappedPlayer[i].state == "evil"){
 					this.killEvil(player, overlappedPlayer[i]);
 				}
 			}
-		} else {
+		} else { // if evil kill human => grab half the treasure, end game
 			for (let i=0; i < overlappedPlayer.length; i++){
 				if (overlappedPlayer[i].state == "human"){
 					this.killHuman(player, overlappedPlayer[i]); // treasure raider has been destroyed
@@ -73,40 +74,85 @@ var Processor = function(model){
 		if (player.state == "human") {
 			if (cell.cellType == "treasure"){
 				// turn other 3 into evil mode
+				for (let i=0; i < this.model.board.players.length; i++){
+					let pi = this.model.board.players[i];
+					if (pi.name != player.name){
+						pi.state = "evil";
+					}
+				}
 				// this cell Type is turned into normal
+				cell.cellType = "normal";
+				// enable to roll dice one more time
+				this.model.canRollToMove = true;
+				
 			} else if (cell.cellType == "start") {
 				// check if this is own start, yes => end game victory
+				if (cell.r == player.startPoint.r && cell.c == player.startPoint.c){
+					this.model.drawMode = "end";
+				}
 				// else, mark as one more gate checked-in if enough gate checked => victory
+				else {					
+					for (let i=0; i < this.model.board.players.length; i++){
+						let pi = this.model.board.players[i];
+						if (pi.startPoint.r == cell.r && pi.startPoint.c == cell.c){
+							//check if the soul is added 
+							let isAdded = false;
+							for(let j=0; j<this.model.board.destroyedSouls.length; j++)
+							{
+								if (this.model.board.destroyedSouls[i] == pi.name) {
+									isAdded = true;
+									break;
+								}
+							}
+							if (!isAdded) { // if not, then add it to the destroyed souls
+								this.model.board.destroyedSouls.push(pi.name);
+							}
+						}
+					}
+					
+					// if enough souls have been destroyed, then victory
+					if (this.model.board.destroyedSouls.length == this.model.board.players.length){
+						this.model.drawMode = "end";
+					}
+				}
 			} else if (cell.cellType == "gateway") {
-				// enable jumping / messagebox show before rolling dice
-			} else {
-				//just move in to this cell
-				player.r = cell.r;
-				player.c = cell.c;
+				// enable jumping
+				this.model.canRollToJump = true;
 			}
 		} else {
 			if (cell.cellType == "gate") {
-				// enable jumping / messagebox show before rolling dice
-			} else {
-				//just move in to this cell
-				player.r = cell.r;
-				player.c = cell.c;
+				// enable jumping
+				this.model.canRollToJump = true;
 			}
 		}
+		
+		// move in to this cell
+		player.r = cell.r;
+		player.c = cell.c;
 	}
 	
 	this.teleport = function(teleValue) {
 	}
 	
-	this.rollDice = function(){
-		let dice1 = Math.floor(Math.random()*6) + 1;
-		let dice2 = Math.floor(Math.random()*6) + 1;
-		return {"dice1": dice1, "dice2": dice2};
+	this.rollMove = function(){
+		this.model.dice = Math.floor(Math.random()*10)+1;
+		
+		if (this.model.dice == 10){
+			this.model.drawMode = "getRune";
+		} else {
+			this.model.curPlayer.actionPoints = this.model.dice;
+			this.canRollToMove = false;
+		}
+	}
+	
+	this.rollJump = function(){
+		this.model.dice = Math.floor(Math.random()*4) + 1;
+		// check inventory if there is a rune that can apply to this
 	}
 	
 	this.getRune = function(){
 	}
 	
 	this.endTurn = function(){
-	}	
+	}
 }
