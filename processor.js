@@ -1,6 +1,7 @@
 var Processor = function(model){
 	
 	this.model = model;
+	this.gameSate = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
 		
 	this.moveNorth = function(){
 		let curPlayer = this.model.curPlayer;
@@ -136,6 +137,9 @@ var Processor = function(model){
 	
 	this.rollMove = function(){
 		this.model.dice = Math.floor(Math.random()*10)+1;
+		this.model.dice += this.model.diceBuff;
+		this.model.dice = Math.min(9, this.model.dice);
+		this.model.diceBuff = 0; // disable dice buff
 		
 		if (this.model.dice == 10){
 			this.model.drawMode = "getRune";
@@ -154,5 +158,9 @@ var Processor = function(model){
 	}
 	
 	this.endTurn = function(){
+	}
+	
+	this.onRuneClicked = function(rune){
+		rune.apply(this);
 	}
 }
