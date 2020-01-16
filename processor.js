@@ -2,42 +2,45 @@ var Processor = function(model){
 	
 	this.model = model;
 		
-	this.moveNorth = function(){
+	this.moveUp = function(){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r - 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
+				curlayer.actiontPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
 	}
 	
-	this.moveSouth = function(){
+	this.moveDown = function(){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r + 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r + 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
+				curlayer.actiontPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
 	}
 	
-	this.moveEast = function(){
+	this.moveLeft = function(){
 		let curPlayer = this.model.curPlayer;
-		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c < this.model.board.nCols){
+		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c + 1 < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c + 1];
 			if (curPlayer.actionPoints >= cell.value){
+				curlayer.actiontPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
 	}
 	
-	this.moveWest = function(){
+	this.moveRight = function(){
 		let curPlayer = this.model.curPlayer;
-		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c < this.model.board.nCols){
+		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c - 1 < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c - 1];
 			if (curPlayer.actionPoints >= cell.value){
-				curlayer.actiontPoints -= cell.vlaue;
+				curlayer.actiontPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
