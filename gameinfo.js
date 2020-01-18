@@ -1,11 +1,15 @@
 var GameInfo = function(){
 	this.players = null;
-	
+	this.curPlayerIdx = -1;
 	this.curPlayer = null;
 	this.board = null;	
 	this.drawMode = "game";
 	this.dice = 1;
+	this.moveBuff = 0;
+	this.jumpBuff = 0;
 	
-	this.canRollToMove = false;
+	this.runes = null;
+	
+	this.canRollToMove = true;
 	this.canRollToJump = false;
 }

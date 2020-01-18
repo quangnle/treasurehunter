@@ -1,11 +1,10 @@
 var processor = null;
 var mainui = new MainUI();
 
-
-	
 function isInBound(pos, region){
+	console.log("is in bound => " + pos);
 	if ((pos.x > region.x && pos.x < region.x + region.w) && 
-		(pos.x > region.y && pos.x < region.y + region.h)) 
+		(pos.y > region.y && pos.y < region.y + region.h)) 
 		return true;
 		
 	return false;
@@ -17,7 +16,10 @@ function setup(){
 	model.board = new Board(21,21);	
 	model.board.initMap();
 	model.players = model.board.players;
-	model.curPlayer = model.players[0];
+	model.curPlayerIdx = 0;
+	model.curPlayer = model.players[model.curPlayerIdx];
+	
+	processor = new Processor(model);
 	
 	let boardui = new BoardUI(0,0,630,630);	
 	boardui.initTileImages();	
@@ -25,25 +27,25 @@ function setup(){
 	mainui.addControl("game", boardui);
 	
 	let dicepaneui = new DicePaneUI(640,0,150,140);
+	// roll dice events handling
+	dicepaneui.onRollMove = () => {processor.rollMove();};
+	dicepaneui.onRollJump = () => {processor.rollJump();};	
 	mainui.addControl("game", dicepaneui);
 	
 	let playerpaneui = new PlayerPaneUI(640,150,150,95);
+	// endturn event handling
+	playerpaneui.onEndTurn = processor.endTurn();	
 	mainui.addControl("game", playerpaneui);
 	
-	mainui.bind(model);
-	
-	processor = new Processor(model);
-	
-	// roll dice events handling
-	dicepaneui.onRollMove = processor.rollMove();
-	dicepaneui.onRollJump = processor.rollJump();
-	
-	// endturn event handling
-	playerpaneui.onEndTurn = processor.endTurn();
+	mainui.bind(model);	
 }
 
 function draw(){
 	mainui.draw();
+}
+
+function mousePressed(){
+	mainui.onClicked(mouseX, mouseY);
 }
 
 function keyPressed(){

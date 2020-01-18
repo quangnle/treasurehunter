@@ -1,14 +1,14 @@
 var Processor = function(model){
 	
 	this.model = model;
-	this.gameSate = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
+	this.gameState = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
 		
 	this.moveUp = function(){
 		let curPlayer = this.model.curPlayer;
 		if (curPlayer.r - 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r - 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
-				curlayer.actiontPoints -= cell.value;
+				curPlayer.actionPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
@@ -19,7 +19,7 @@ var Processor = function(model){
 		if (curPlayer.r + 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r + 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
-				curlayer.actiontPoints -= cell.value;
+				curPlayer.actionPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
@@ -30,7 +30,7 @@ var Processor = function(model){
 		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c + 1 < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c + 1];
 			if (curPlayer.actionPoints >= cell.value){
-				curlayer.actiontPoints -= cell.value;
+				curPlayer.actionPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
@@ -41,7 +41,7 @@ var Processor = function(model){
 		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c - 1 < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r][curPlayer.c - 1];
 			if (curPlayer.actionPoints >= cell.value){
-				curlayer.actiontPoints -= cell.value;
+				curPlayer.actionPoints -= cell.value;
 				this.enterCell(cell);
 			}
 		}
@@ -154,13 +154,23 @@ var Processor = function(model){
 	
 	this.rollJump = function(){
 		this.model.dice = Math.floor(Math.random()*4) + 1;
-		// check inventory if there is a rune that can apply to this
+		// check inventory if there is a rune that can be used for jumping
+		
+		this.canRollToJump = false;
 	}
 	
 	this.getRune = function(){
+		this.model.curPlayer.runes.push(this.model.runes.pop());
 	}
 	
 	this.endTurn = function(){
+		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.players.length;
+		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
+		
+		this.model.curPlayer.canRollToMove = true;
+		
+		// check if can jump to set status
+		// this.model.curPlayer.canRollToMove = true/ false;
 	}
 	
 	this.onRuneClicked = function(rune){

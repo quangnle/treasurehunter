@@ -36,7 +36,7 @@ var PlayerPaneUI = function(x,y,w,h){
 	}
 	
 	this.onClicked = function(mx, my){
-		let pos = {"x":mx, "y":my};
+		let pos = {"x":(mx-this.x), "y":(my-this.y)};
 		if (isInBound(pos, this.onEndTurn)) {
 			this.onEndTurn();
 		}

@@ -12,16 +12,11 @@ var DicePaneUI = function(x,y,w,h){
 		let pane = new PaneUI(0,0,w,h,"Dices");
 		pane.draw();
 		
-		// draw numbers
-		// dice1
+		// draw number
 		fill(0);
 		textSize(40);
 		textAlign(CENTER, CENTER);
 		text(this.model.dice, 0.5*w, 60);
-		
-		
-		// dice2
-		
 		
 		//draw buttons
 		this.btnMove = new ButtonUI(5,90,w-10,20,"Roll to Move", "#faa");
@@ -44,16 +39,19 @@ var DicePaneUI = function(x,y,w,h){
 	}
 	
 	this.onClicked = function(mx, my){
-		let pos = {"x":mx, "y":my};
+		let pos = {"x":(mx-this.x), "y":(my-this.y)};
+		console.log("dp =>" + (mx-this.x) + " " + (my-this.y));
 		if (isInBound(pos, this.btnMove)) {
+			console.log("move");
 			if (this.onRollMove != null){
 				this.onRollMove();
 			}
 		}
 		
 		if (isInBound(pos, this.btnJump)) {
-			if (this.onRollDice != null){
-				this.onRollDice();
+			console.log("jump");
+			if (this.onRollJump != null){
+				this.onRollJump();
 			}
 		}
 	}
