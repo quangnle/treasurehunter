@@ -164,7 +164,7 @@ var Processor = function(model){
 	}
 	
 	this.endTurn = function(){
-		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.players.length;
+		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.model.players.length;
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
 		
 		this.model.curPlayer.canRollToMove = true;

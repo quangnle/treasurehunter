@@ -28,13 +28,13 @@ function setup(){
 	
 	let dicepaneui = new DicePaneUI(640,0,150,140);
 	// roll dice events handling
-	dicepaneui.onRollMove = () => {processor.rollMove();};
-	dicepaneui.onRollJump = () => {processor.rollJump();};	
+	dicepaneui.onRollMove = processor.rollMove;
+	dicepaneui.onRollJump = processor.rollJump;	
 	mainui.addControl("game", dicepaneui);
 	
 	let playerpaneui = new PlayerPaneUI(640,150,150,95);
 	// endturn event handling
-	playerpaneui.onEndTurn = processor.endTurn();	
+	playerpaneui.onEndTurn = processor.endTurn;	
 	mainui.addControl("game", playerpaneui);
 	
 	mainui.bind(model);	
