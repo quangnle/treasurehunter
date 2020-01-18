@@ -40,13 +40,13 @@ var BoardUI = function (x,y,w,h){
 			for(let r = 0; r < this.model.board.nRows; r++){
 				for(let c = 0; c < this.model.board.nCols; c++){				
 					if(this.model.board.cells[r][c].cellType=="normal"){
-						image(this.tiles[this.model.board.cells[r][c].value - 1], r*this.cellSize, c*this.cellSize);
+						image(this.tiles[this.model.board.cells[r][c].value - 1], c*this.cellSize, r*this.cellSize);
 					} else if (this.model.board.cells[r][c].cellType == "start"){
-						image(this.tiles[4], r*this.cellSize, c*this.cellSize);
+						image(this.tiles[4], c*this.cellSize, r*this.cellSize);
 					} else if (this.model.board.cells[r][c].cellType == "gate"){
-						image(this.tiles[5], r*this.cellSize, c*this.cellSize);
+						image(this.tiles[5], c*this.cellSize, r*this.cellSize);
 					} else {
-						image(this.tiles[6], r*this.cellSize, c*this.cellSize);
+						image(this.tiles[6], c*this.cellSize, r*this.cellSize);
 					}					
 				}
 			}
@@ -54,9 +54,9 @@ var BoardUI = function (x,y,w,h){
 			for (let i=0; i< this.model.board.players.length; i++){
 				let player = this.model.board.players[i];
 				if (player.state == "human"){
-					image(this.plImages[i].human, player.r * this.cellSize + 5, player.c * this.cellSize + 5);
+					image(this.plImages[i].human, player.c * this.cellSize + 5, player.r * this.cellSize + 5);
 				} else {
-					image(this.plImages[i].evil, player.r * this.cellSize + 5, player.c * this.cellSize + 5);
+					image(this.plImages[i].evil, player.c * this.cellSize + 5, player.r * this.cellSize + 5);
 				}
 			}
 			
@@ -69,7 +69,7 @@ var BoardUI = function (x,y,w,h){
 			noFill();
 			stroke(0);	
 			strokeWeight(3);
-			rect(this.model.curPlayer.r * this.cellSize, this.model.curPlayer.c * this.cellSize, this.cellSize, this.cellSize);
+			rect(this.model.curPlayer.c * this.cellSize, this.model.curPlayer.r * this.cellSize, this.cellSize, this.cellSize);
 		}
 		
 		pop();
