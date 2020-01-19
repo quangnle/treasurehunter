@@ -27,8 +27,8 @@ var Processor = function(model){
 	
 	this.moveLeft = function(){
 		let curPlayer = this.model.curPlayer;
-		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c + 1 < this.model.board.nCols){
-			let cell = this.model.board.cells[curPlayer.r][curPlayer.c + 1];
+		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c - 1 < this.model.board.nCols){
+			let cell = this.model.board.cells[curPlayer.r][curPlayer.c - 1];
 			if (curPlayer.actionPoints >= cell.value){
 				curPlayer.actionPoints -= cell.value;
 				this.enterCell(cell);
@@ -38,8 +38,8 @@ var Processor = function(model){
 	
 	this.moveRight = function(){
 		let curPlayer = this.model.curPlayer;
-		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c - 1 >= 0 && curPlayer.c - 1 < this.model.board.nCols){
-			let cell = this.model.board.cells[curPlayer.r][curPlayer.c - 1];
+		if (curPlayer.r >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c + 1 >= 0 && curPlayer.c + 1 < this.model.board.nCols){
+			let cell = this.model.board.cells[curPlayer.r][curPlayer.c + 1];
 			if (curPlayer.actionPoints >= cell.value){
 				curPlayer.actionPoints -= cell.value;
 				this.enterCell(cell);
@@ -139,24 +139,28 @@ var Processor = function(model){
 	}
 	
 	this.rollMove = function(){
-		this.model.dice = Math.floor(Math.random()*10)+1;
-		this.model.dice += this.model.diceBuff;
-		this.model.dice = Math.min(9, this.model.dice);
-		this.model.diceBuff = 0; // disable dice buff
-		
-		if (this.model.dice == 10){
-			this.model.drawMode = "getRune";
-		} else {
-			this.model.curPlayer.actionPoints = this.model.dice;
-			this.canRollToMove = false;
+		if (this.canRollToMove){
+			this.model.dice = Math.floor(Math.random()*10)+1;
+			
+			if (this.model.dice == 10){
+				this.model.drawMode = "getRune";
+			} else {
+				this.model.curPlayer.actionPoints = this.model.dice;
+				this.model.dice += this.model.moveBuff;
+				this.model.dice = Math.min(9, this.model.dice);
+				this.model.moveBuff = 0; // disable dice buff
+				this.model.canRollToMove = false;
+			}
 		}
 	}
 	
 	this.rollJump = function(){
-		this.model.dice = Math.floor(Math.random()*4) + 1;
-		// check inventory if there is a rune that can be used for jumping
-		
-		this.canRollToJump = false;
+		if (this.canRollToJump){
+			this.model.dice = Math.floor(Math.random()*4) + 1;
+			// check inventory if there is a rune that can be used for jumping
+			
+			this.model.canRollToJump = false;
+		}
 	}
 	
 	this.getRune = function(){

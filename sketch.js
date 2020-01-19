@@ -50,12 +50,12 @@ function mousePressed(){
 
 function keyPressed(){
 	if (keyCode === LEFT_ARROW) {
-		processor.moveWest();
+		processor.moveLeft();
 	} else if (keyCode === RIGHT_ARROW) {
-		processor.moveEast();
+		processor.moveRight();
 	} else if (keyCode === UP_ARROW) {
-		processor.moveNorth();
+		processor.moveUp();
 	} else if (keyCode === DOWN_ARROW) {
-		processor.moveSouth();
+		processor.moveDown();
 	}
 }

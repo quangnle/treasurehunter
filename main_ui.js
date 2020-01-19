@@ -22,12 +22,14 @@ var MainUI = function(w,h){
 	}
 	
 	this.draw = function(){
+		
 		for (let i=0; i< this.controls[this.model.drawMode].length; i++){
 			this.controls[this.model.drawMode][i].draw();
 		}
 	}
 	
 	this.onClicked = function(mx, my){
+		
 		for (let i=0; i< this.controls[this.model.drawMode].length; i++){
 			if (isInBound({"x":mx, "y":my}, this.controls[this.model.drawMode][i])){
 				this.controls[this.model.drawMode][i].onClicked(mx,my);

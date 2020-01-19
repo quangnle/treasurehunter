@@ -4,6 +4,9 @@ var DicePaneUI = function(x,y,w,h){
 	this.w = w;
 	this.h = h;
 	
+	this.btnMove = new ButtonUI(5,90,w-10,20,"Roll to Move", "#aaa");
+	this.btnJump = new ButtonUI(5,115,w-10,20,"Roll to Jump", "#aaa");
+	
 	this.draw = function(){
 		push();
 		translate(this.x, this.y);
@@ -18,16 +21,18 @@ var DicePaneUI = function(x,y,w,h){
 		textAlign(CENTER, CENTER);
 		text(this.model.dice, 0.5*w, 60);
 		
-		//draw buttons
-		this.btnMove = new ButtonUI(5,90,w-10,20,"Roll to Move", "#faa");
-		if (this.model.canRollToMove){
+		//draw buttons 
+		if (!this.model.canRollToMove){
+			this.btnMove.fillColor = "#faa";
+		} else {
 			this.btnMove.fillColor = "#aaa";
 		}
 		this.btnMove.draw();
 		
-		this.btnJump = new ButtonUI(5,115,w-10,20,"Roll to Jump", "#faa");
-		if (this.model.canRollToJump){
-			this.btnJump.fillColor = "#aaa";
+		if (!this.model.canRollToJump){
+			this.btnJump.fillColor = "#faa";
+		} else {
+			this.btnMove.fillColor = "#aaa";
 		}
 		this.btnJump.draw();
 		
