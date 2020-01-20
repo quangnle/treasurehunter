@@ -32,7 +32,7 @@ var DicePaneUI = function(x,y,w,h){
 		if (!this.model.canRollToJump){
 			this.btnJump.fillColor = "#faa";
 		} else {
-			this.btnMove.fillColor = "#aaa";
+			this.btnJump.fillColor = "#aaa";
 		}
 		this.btnJump.draw();
 		
@@ -46,17 +46,22 @@ var DicePaneUI = function(x,y,w,h){
 	this.onClicked = function(mx, my){
 		let pos = {"x":(mx-this.x), "y":(my-this.y)};
 		console.log("dp =>" + (mx-this.x) + " " + (my-this.y));
-		if (isInBound(pos, this.btnMove)) {
-			console.log("move");
-			if (this.onRollMove != null){
-				this.onRollMove();
+		
+		if (this.model.canRollToMove){
+			if (isInBound(pos, this.btnMove)) {
+				console.log("move");
+				if (this.onRollMove != null){
+					this.onRollMove();
+				}
 			}
 		}
 		
-		if (isInBound(pos, this.btnJump)) {
-			console.log("jump");
-			if (this.onRollJump != null){
-				this.onRollJump();
+		if (this.model.canRollToJump) {
+			if (isInBound(pos, this.btnJump)) {
+				console.log("jump");
+				if (this.onRollJump != null){
+					this.onRollJump();
+				}
 			}
 		}
 	}

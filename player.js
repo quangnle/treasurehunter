@@ -1,7 +1,7 @@
 var Player = function(name, money, row, col){
 	this.name = name;
 	this.money = money;
-	this.actionPoints = 9;
+	this.actionPoints = 0;
 	this.runes = [];
 	this.state = "human"; // "evil"
 	this.r = row;

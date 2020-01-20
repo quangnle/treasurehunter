@@ -155,23 +155,22 @@ var Processor = function(model){
 	}
 	
 	this.rollJump = function(){
-		if (this.canRollToJump){
-			this.model.dice = Math.floor(Math.random()*4) + 1;
-			// check inventory if there is a rune that can be used for jumping
-			let jumpRunes = [];
-			for(let i =0; i < this.model.curPlayer.inventory.length; i++){
-				let rune = this.model.curPlayer.inventory[i];
-				if (rune.type == "jump") {
-					jumpRunes.push(rune);
-				}
+		
+		this.model.dice = Math.floor(Math.random()*4) + 1;
+		// check inventory if there is a rune that can be used for jumping
+		let jumpRunes = [];
+		for(let i =0; i < this.model.curPlayer.inventory.length; i++){
+			let rune = this.model.curPlayer.inventory[i];
+			if (rune.type == "jump") {
+				jumpRunes.push(rune);
 			}
-			
-			if (jumpRunes.length > 0){
-				this.model.drawMode = "selectJumpRune";
-			}
-			
-			this.model.canRollToJump = false;
 		}
+		
+		if (jumpRunes.length > 0){
+			this.model.drawMode = "selectJumpRune";
+		}
+		
+		this.model.canRollToJump = false;
 	}
 	
 	this.getRune = function(){
@@ -190,5 +189,18 @@ var Processor = function(model){
 	
 	this.onRuneClicked = function(rune){
 		rune.apply(this);
+	}
+	
+	this.getAllOpponents = function(){
+		let result = [];
+		
+		for (let i=0; i < this.model.board.players.length; i++){
+			let pi = this.model.board.players[i];
+			if (pi.name != this.model.curPlayer.name){
+				result.push(pi);
+			}
+		}
+		
+		return result;
 	}
 }
