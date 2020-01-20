@@ -18,6 +18,7 @@ var Board = function(nRows, nCols){
 	this.nCols = nCols;
 	
 	this.starts = [{"r":0, "c":0}, {"r":0, "c":nCols}, {"r":nRows, "c":nCols}, {"r":nRows, "c":0}];
+	this.gateways = [{"r":3, "c":3}, {"r":3, "c":17}, {"r":17, "c":17}, {"r":17, "c":3}];
 	
 	this.initMap = function(){
 		
@@ -31,7 +32,7 @@ var Board = function(nRows, nCols){
 		}
 		
 		for (r = 0; r < 11; r++){
-			for (c = 0; c <= r ; c++){
+			for (c = 0; c <= r; c++){
 				this.cells[r][c].value = this.m[r][c];
 				this.cells[c][r].value = this.m[r][c];
 			}
@@ -52,9 +53,9 @@ var Board = function(nRows, nCols){
 		
 		// starts
 		this.cells[0][0].cellType = "start";
-		this.cells[20][0].cellType = "start";
-		this.cells[20][20].cellType = "start";
 		this.cells[0][20].cellType = "start";
+		this.cells[20][20].cellType = "start";
+		this.cells[20][0].cellType = "start";
 		
 		// gates
 		this.cells[3][3].cellType = "gate";
@@ -68,7 +69,6 @@ var Board = function(nRows, nCols){
 		let player3 = new Player("Nam", 100000, 20, 20);
         let player4 = new Player("Phuc", 100000, 20, 0);
 		
-        this.players = [player1, player2, player3, player4];
-		
+        this.players = [player1, player2, player3, player4];		
 	}
 }

@@ -158,6 +158,17 @@ var Processor = function(model){
 		if (this.canRollToJump){
 			this.model.dice = Math.floor(Math.random()*4) + 1;
 			// check inventory if there is a rune that can be used for jumping
+			let jumpRunes = [];
+			for(let i =0; i < this.model.curPlayer.inventory.length; i++){
+				let rune = this.model.curPlayer.inventory[i];
+				if (rune.type == "jump") {
+					jumpRunes.push(rune);
+				}
+			}
+			
+			if (jumpRunes.length > 0){
+				this.model.drawMode = "selectJumpRune";
+			}
 			
 			this.model.canRollToJump = false;
 		}

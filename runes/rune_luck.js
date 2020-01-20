@@ -5,7 +5,7 @@ var RuneLuck = function(name, runeType, description){
 	this.owner = null;
 	
 	this.apply = function(processor){
-		let opponents = processor.getAllOpponents(processor.model.curPlayer);
+		let opponents = processor.getAllOpponents();
 		for (let i=0; i<opponents.length;i++){
 			opponents.money -= 5000;
 			processor.model.curPlayer.money += 5000;

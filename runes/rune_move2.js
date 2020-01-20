@@ -6,7 +6,7 @@ var RuneMove2 = function(name, runeType, description){
 	
 	this.apply = function(processor){
 		if (processor.gameState == "beforeRoll"){ 
-			this.processor.model.diceBuff = 2;
+			this.processor.model.moveBuff = 2;
 		}
 	}
 }
