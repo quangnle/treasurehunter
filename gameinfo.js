@@ -12,4 +12,5 @@ var GameInfo = function(){
 	
 	this.canRollToMove = true;
 	this.canRollToJump = false;
+	this.canUseRune = false;
 }

@@ -4,6 +4,7 @@ var DicePaneUI = function(x,y,w,h){
 	this.w = w;
 	this.h = h;
 	
+	this.pane = new PaneUI(0,0,w,h,"Dices");
 	this.btnMove = new ButtonUI(5,90,w-10,20,"Roll to Move", "#aaa");
 	this.btnJump = new ButtonUI(5,115,w-10,20,"Roll to Jump", "#aaa");
 	
@@ -12,8 +13,7 @@ var DicePaneUI = function(x,y,w,h){
 		translate(this.x, this.y);
 		
 		// draw panel
-		let pane = new PaneUI(0,0,w,h,"Dices");
-		pane.draw();
+		this.pane.draw();
 		
 		// draw number
 		fill(0);
