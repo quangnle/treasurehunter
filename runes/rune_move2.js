@@ -3,6 +3,7 @@ var RuneMove2 = function(name, runeType, description){
 	this.runeType = runeType; // move, jump, luck, unluck, gateway
 	this.description = "increase rolled value by 2";
 	this.owner = null;
+	this.imgPath = "imgs/r_move2.png";
 	
 	this.apply = function(processor){
 		if (processor.gameState == "beforeRoll"){ 

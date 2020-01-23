@@ -3,6 +3,7 @@ var PlayerPaneUI = function(x,y,w,h){
 	this.y = y;
 	this.w = w;
 	this.h = h;
+	this.btnMove = new ButtonUI(5,70,w-10,20,"End Turn", "#aaa");
 	
 	this.draw = function(){
 		push();
@@ -25,7 +26,6 @@ var PlayerPaneUI = function(x,y,w,h){
 		text("Action Points= " + this.model.curPlayer.actionPoints, 0.5*w, 60);
 		
 		//draw endturn btn
-		this.btnMove = new ButtonUI(5,70,w-10,20,"End Turn", "#faa");
 		this.btnMove.draw();
 		
 		pop();
@@ -37,8 +37,10 @@ var PlayerPaneUI = function(x,y,w,h){
 	
 	this.onClicked = function(mx, my){
 		let pos = {"x":(mx-this.x), "y":(my-this.y)};
-		if (isInBound(pos, this.onEndTurn)) {
-			this.onEndTurn();
+		if (isInBound(pos, this.btnMove)) {
+			if (this.onEndTurn != null){
+				this.onEndTurn();
+			}
 		}
 	}
 }

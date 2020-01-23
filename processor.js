@@ -139,23 +139,20 @@ var Processor = function(model){
 	}
 	
 	this.rollMove = function(){
-		if (this.canRollToMove){
-			this.model.dice = Math.floor(Math.random()*10)+1;
-			
-			if (this.model.dice == 10){
-				this.model.drawMode = "getRune";
-			} else {
-				this.model.curPlayer.actionPoints = this.model.dice;
-				this.model.dice += this.model.moveBuff;
-				this.model.dice = Math.min(9, this.model.dice);
-				this.model.moveBuff = 0; // disable dice buff
-				this.model.canRollToMove = false;
-			}
+		this.model.dice = Math.floor(Math.random()*10)+1;
+		
+		if (this.model.dice == 10){
+			this.model.drawMode = "getrune";
+		} else {
+			this.model.curPlayer.actionPoints = this.model.dice;
+			this.model.dice += this.model.moveBuff;
+			this.model.dice = Math.min(9, this.model.dice);
+			this.model.moveBuff = 0; // disable dice buff
+			this.model.canRollToMove = false;
 		}
 	}
 	
 	this.rollJump = function(){
-		
 		this.model.dice = Math.floor(Math.random()*4) + 1;
 		// check inventory if there is a rune that can be used for jumping
 		let jumpRunes = [];
@@ -167,28 +164,46 @@ var Processor = function(model){
 		}
 		
 		if (jumpRunes.length > 0){
-			this.model.drawMode = "selectJumpRune";
+			this.model.drawMode = "selectjumprune";
 		}
 		
 		this.model.canRollToJump = false;
 	}
+		
+	this.onGetRuneClosing = function(){
+		this.model.drawMode = "game";
+	}
 	
-	this.getRune = function(){
-		this.model.curPlayer.runes.push(this.model.runes.pop());
+	this.onAcceptRune = function(){
+		let receivedRune = this.model.runes.pop();		
+		this.model.receivedRune = receivedRune;
+		this.model.curPlayer.runes.push(receivedRune);
+	}
+	
+	this.onIgnoreRune = function(){
+		this.model.drawMode = "game";
 	}
 	
 	this.endTurn = function(){
 		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.model.players.length;
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
 		
-		this.model.curPlayer.canRollToMove = true;
+		this.model.canRollToMove = true;
 		
 		// check if can jump to set status
-		// this.model.curPlayer.canRollToMove = true/ false;
+		this.model.canRollToJump = false;
+		if (this.getGatewayIdx(this.model.curPlayer.r, this.model.curPlayer.c)>=0){
+			this.model.canRollToJump = true;
+		}
 	}
 	
-	this.onRuneClicked = function(rune){
-		rune.apply(this);
+	this.onUseRune = function(){
+		this.model.selectedRune.apply(this);
+	}
+	
+	//selecting a rune in the inventory
+	this.onRuneSelected = function(rune){
+		this.model.selectedRune = rune;
 	}
 	
 	this.getAllOpponents = function(){
@@ -201,6 +216,18 @@ var Processor = function(model){
 			}
 		}
 		
+		return result;
+	}	
+	
+	this.getGatewayIdx = function(r,c){
+		let result = -1; // is not in any gateway
+		for (let i = 0; i < this.model.board.gateways.length; i++){
+			let g = this.model.board.gateways[i];
+			if (this.model.curPlayer.r == g.r && this.model.curPlayer.c == g.c){
+				result = i;
+				break;
+			}
+		}
 		return result;
 	}
 }

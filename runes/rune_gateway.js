@@ -3,6 +3,7 @@ var RuneGateway = function(name, runeType, description){
 	this.runeType = runeType; // move, jump, luck, unluck, gateway
 	this.description = "pay each other player $5,000";
 	this.owner = null;
+	this.imgPath = "imgs/r_gateway.png";
 	
 	this.apply = function(processor){
 		let curPlayer = processor.model.curPlayer;

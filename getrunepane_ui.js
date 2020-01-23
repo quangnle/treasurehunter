@@ -15,10 +15,13 @@ var GetRunePaneUI = function(x,y,w,h,caption){
 		// draw message
 		textSize(12);
 		textAlign(CENTER, CENTER);
-		text("Do you want to get a rune?", w >> 1, 20);
+		text("Do you want to get a rune?", this.w >> 1, 20);
 		
 		// draw rune's frame
-		rect((w >> 1) - 25, 40, 50, 50);
+		rect((this.w >> 1) - 25, 40, 50, 50);
+		if (this.model.receivedRune != null){
+				image(this.model.receivedRune.img, (this.w >> 1) - 25,40,50,50);
+		}
 		
 		// draw buttons
 		this.btnOK.draw();

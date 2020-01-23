@@ -40,10 +40,11 @@ var InventoryPaneUI = function(x,y,w,h){
 		let pos = {"x":(mx-this.x), "y":(my-this.y)};
 		console.log("dp =>" + (mx-this.x) + " " + (my-this.y));
 		
+		// btnUseRune is clicked
 		if (this.model.canUseRune){
 			if (isInBound(pos, this.btnUseRune)) {
 				console.log("rune");
-				if (this.onUseRune != null){
+				if (this.onUseRune != null && this.model.selectedRune != null){
 					this.onUseRune();
 				}
 			}

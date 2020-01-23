@@ -37,6 +37,16 @@ function setup(){
 	playerpaneui.onEndTurn = processor.endTurn;	
 	mainui.addControl("game", playerpaneui);
 	
+	let inventorypaneui = new InventoryPaneUI(640,260,150,260);
+	inventorypaneui.onUseRune = processor.onUseRune;
+	mainui.addControl("game", inventorypaneui);
+	
+	// get rune mode
+	let getrunepaneui = new GetRunePaneUI(50,50,300,100);
+	mainui.addControl("getrune", getrunepaneui);
+	
+	// select rune mode
+	
 	mainui.bind(model);	
 }
 
