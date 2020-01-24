@@ -22,7 +22,6 @@ var MainUI = function(w,h){
 	}
 	
 	this.draw = function(){
-		
 		for (let i=0; i< this.controls[this.model.drawMode].length; i++){
 			this.controls[this.model.drawMode][i].draw();
 		}

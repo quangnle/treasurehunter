@@ -4,9 +4,8 @@ var InventoryPaneUI = function(x,y,w,h){
 	this.w = w;
 	this.h = h;
 	
-	this.pane = new PaneUI(0,0,w,h,"Dices");
-	this.btnUseRune = new ButtonUI(5,90,w-10,20,"Use Rune", "#aaa");
-	
+	this.pane = new PaneUI(0,0,w,h,"Inventory");
+	this.btnUseRune = new ButtonUI(5,175,w-10,20,"Use Rune", "#aaa");
 	
 	this.draw = function(){
 		push();
@@ -15,11 +14,12 @@ var InventoryPaneUI = function(x,y,w,h){
 		// draw panel
 		this.pane.draw();
 		
-		// draw number
-		fill(0);
-		textSize(40);
-		textAlign(CENTER, CENTER);
-		text(this.model.dice, 0.5*w, 60);
+		// draw slots		
+		for(let i=0; i<3;i++){
+			for(let j=0; j<3; j++){
+				rect(5+j*47, 30+i*47,45,45);
+			}
+		}
 		
 		//draw buttons 
 		if (!this.model.canUseRune){

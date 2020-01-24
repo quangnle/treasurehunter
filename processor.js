@@ -170,7 +170,7 @@ var Processor = function(model){
 		this.model.canRollToJump = false;
 	}
 		
-	this.onGetRuneClosing = function(){
+	this.onGetRuneClosed = function(){
 		this.model.drawMode = "game";
 	}
 	
@@ -187,13 +187,18 @@ var Processor = function(model){
 	this.endTurn = function(){
 		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.model.players.length;
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
+		this.model.curPlayer.actionPoints = 0;
 		
 		this.model.canRollToMove = true;
 		
 		// check if can jump to set status
 		this.model.canRollToJump = false;
-		if (this.getGatewayIdx(this.model.curPlayer.r, this.model.curPlayer.c)>=0){
-			this.model.canRollToJump = true;
+		for (let i = 0; i < this.model.board.gateways.length; i++){
+			let g = this.model.board.gateways[i];
+			if (this.model.curPlayer.r == g.r && this.model.curPlayer.c == g.c){
+				this.model.canRollToJump = true;
+				break;
+			}
 		}
 	}
 	
@@ -208,14 +213,12 @@ var Processor = function(model){
 	
 	this.getAllOpponents = function(){
 		let result = [];
-		
 		for (let i=0; i < this.model.board.players.length; i++){
 			let pi = this.model.board.players[i];
 			if (pi.name != this.model.curPlayer.name){
 				result.push(pi);
 			}
 		}
-		
 		return result;
 	}	
 	

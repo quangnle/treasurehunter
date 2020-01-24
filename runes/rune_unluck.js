@@ -3,7 +3,7 @@ var RuneUnluck = function(name, runeType, description){
 	this.runeType = runeType; // move, jump, luck, unluck, gateway
 	this.description = "pay each other player $5,000";
 	this.owner = null;
-	this.imgPath = "imgs/.png";
+	this.imgPath = "imgs/r_unluck.png";
 	
 	this.apply = function(processor){
 		let opponents = processor.getAllOpponents();

@@ -37,15 +37,19 @@ function setup(){
 	playerpaneui.onEndTurn = processor.endTurn;	
 	mainui.addControl("game", playerpaneui);
 	
-	let inventorypaneui = new InventoryPaneUI(640,260,150,260);
+	let inventorypaneui = new InventoryPaneUI(640,260,150,200);
 	inventorypaneui.onUseRune = processor.onUseRune;
 	mainui.addControl("game", inventorypaneui);
 	
 	// get rune mode
-	let getrunepaneui = new GetRunePaneUI(50,50,300,100);
+	let getrunepaneui = new GetRunePaneUI(150,150,300,120);
+	getrunepaneui.onAcceptRune = processor.onAcceptRune;
+	getrunepaneui.onIgnoreRune = processor.onIgnoreRune;
+	getrunepaneui.onClose = processor.onGetRuneClosed;
 	mainui.addControl("getrune", getrunepaneui);
 	
-	// select rune mode
+	// select rune mode "selectjumprune"
+	
 	
 	mainui.bind(model);	
 }
