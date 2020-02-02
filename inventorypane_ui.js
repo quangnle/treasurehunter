@@ -16,11 +16,7 @@ var InventoryPaneUI = function(x,y,w,h){
 		this.pane.draw();
 		
 		// draw slots		
-		for(let i=0; i<3;i++){
-			for(let j=0; j<3; j++){
-				rect(5+j*47, 30+i*47,45,45);
-			}
-		}
+		this.slotPane.draw();
 		
 		//draw buttons 
 		if (!this.model.canUseRune){
