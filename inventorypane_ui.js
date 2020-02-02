@@ -5,7 +5,8 @@ var InventoryPaneUI = function(x,y,w,h){
 	this.h = h;
 	
 	this.pane = new PaneUI(0,0,w,h,"Inventory");
-	this.btnUseRune = new ButtonUI(5,175,w-10,20,"Use Rune", "#aaa");
+	this.slotPane = new SlotPaneUI(0,30,this.w,70, 40);
+	this.btnUseRune = new ButtonUI(5,175,this.w-10,20,"Use Rune", "#aaa");
 	
 	this.draw = function(){
 		push();
