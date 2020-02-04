@@ -1,6 +1,6 @@
-var RuneMove1 = function(name, runeType, description){
-	this.name = name;
-	this.runeType = runeType; // move, jump, luck, unluck, gateway
+var RuneMove1 = function(){
+	this.name = "m1";
+	this.runeType = "move"; // move, jump, luck, unluck, gateway
 	this.description = "increase rolled value by 1";
 	this.owner = null;
 	this.imgPath = "imgs/r_move1.png";

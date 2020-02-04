@@ -2,6 +2,30 @@ var Processor = function(model){
 	
 	this.model = model;
 	this.gameState = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
+	
+	this.loadRunes = function(){
+		this.model.runes = [];
+		this.model.runes.push(new RuneLuck()); // 1 rune luck
+		
+		this.model.runes.push(new RuneJump1());
+		this.model.runes.push(new RuneJump1());
+		this.model.runes.push(new RuneJump2());
+		this.model.runes.push(new RuneJump2());
+		this.model.runes.push(new RuneJump3());
+		this.model.runes.push(new RuneJump3()); // 6 jump runes
+		
+		this.model.runes.push(new RuneMove1());
+		this.model.runes.push(new RuneMove1());
+		this.model.runes.push(new RuneMove1());
+		this.model.runes.push(new RuneMove1());
+		this.model.runes.push(new RuneMove2());
+		this.model.runes.push(new RuneMove2());
+		this.model.runes.push(new RuneMove2());
+		this.model.runes.push(new RuneMove3());
+		this.model.runes.push(new RuneMove3());		// 9 move runes
+		
+		this.model.runes.push(new RuneGateway()); // 1 gateway rune
+	}
 		
 	this.moveUp = function(){
 		let curPlayer = this.model.curPlayer;

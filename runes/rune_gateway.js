@@ -1,7 +1,7 @@
-var RuneGateway = function(name, runeType, description){
-	this.name = name;
-	this.runeType = runeType; // move, jump, luck, unluck, gateway
-	this.description = "pay each other player $5,000";
+var RuneGateway = function(){
+	this.name = "g";
+	this.runeType = "gateway"; // move, jump, luck, unluck, gateway
+	this.description = "back to the nearest gateway";
 	this.owner = null;
 	this.imgPath = "imgs/r_gateway.png";
 	

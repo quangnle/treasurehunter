@@ -20,6 +20,7 @@ function setup(){
 	model.curPlayer = model.players[model.curPlayerIdx];
 	
 	processor = new Processor(model);
+	processor.loadRunes();
 	
 	let boardui = new BoardUI(0,0,630,630);	
 	boardui.initTileImages();	
@@ -49,8 +50,6 @@ function setup(){
 	mainui.addControl("getrune", getrunepaneui);
 	
 	// select rune mode "selectjumprune"
-	
-	
 	mainui.bind(model);	
 }
 

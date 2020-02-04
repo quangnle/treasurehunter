@@ -1,9 +1,10 @@
-var SlotPaneUI = function(x,y,w,h,s){ // 3x3
+var SlotPaneUI = function(x,y,s){ // 3x3
 	this.x = x;
 	this.y = y;
-	this.w = w;
-	this.h = h;
 	this.slotSize = s;
+	this.w = (s+4)*3;
+	this.h = (s+4)*3;
+	
 	
 	this.draw = function(){
 		push();
@@ -46,7 +47,9 @@ var SlotPaneUI = function(x,y,w,h,s){ // 3x3
 		let pos = {"x":(mx-this.x), "y":(my-this.y)};
 		let mc = Math.floor(pos.x / this.slotSize);
 		let mr = Math.floor(pos.y / this.slotSize);
-		this.selectedIndex = Math.min(mr*3 + mc, this.runes.length - 1);
 		console.log("slot => " + mc + " " + mr);
+		if (this.runes != null && this.runes.length > 0){
+			this.selectedIndex = Math.min(mr*3 + mc, this.runes.length - 1);
+		}
 	}
 }

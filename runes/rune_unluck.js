@@ -1,6 +1,6 @@
-var RuneUnluck = function(name, runeType, description){
-	this.name = name;
-	this.runeType = runeType; // move, jump, luck, unluck, gateway
+var RuneUnluck = function(){
+	this.name = "ul";
+	this.runeType = "unluck";// move, jump, luck, unluck, gateway
 	this.description = "pay each other player $5,000";
 	this.owner = null;
 	this.imgPath = "imgs/r_unluck.png";
