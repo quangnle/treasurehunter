@@ -5,7 +5,7 @@ var InventoryPaneUI = function(x,y,w,h){
 	this.h = h;
 	
 	this.pane = new PaneUI(0,0,w,h,"Inventory");
-	this.slotPane = new SlotPaneUI(0,30,this.w,70, 40);
+	this.slotPane = new SlotPaneUI(12,30,this.w,70, 40);
 	this.btnUseRune = new ButtonUI(5,175,this.w-10,20,"Use Rune", "#aaa");
 	
 	this.draw = function(){
@@ -31,6 +31,7 @@ var InventoryPaneUI = function(x,y,w,h){
 	
 	this.bind = function(model){
 		this.model = model;
+		this.slotPane.bind(model);
 	}
 	
 	this.onClicked = function(mx, my){
@@ -45,6 +46,10 @@ var InventoryPaneUI = function(x,y,w,h){
 					this.onUseRune();
 				}
 			}
+		}
+		
+		if (isInBound(pos, this.slotPane)){
+			this.slotPane.onClicked(pos.x, pos.y);
 		}
 	}
 }

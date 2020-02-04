@@ -18,9 +18,9 @@ var SlotPaneUI = function(x,y,w,h,s){ // 3x3
 		
 		// draw runes & selected cell
 		this.runes = [];
-		if (this.model.board.curPlayer.inventory != null){
-			for (let i=0; i < this.model.board.curPlayer.inventory.length; i++){
-				this.runes.push(model.board.curPlayer.inventory[i]);
+		if (this.model.curPlayer.runes != null){
+			for (let i=0; i < this.model.curPlayer.runes.length; i++){
+				this.runes.push(this.model.curPlayer.runes[i]);
 			}
 		}
 		
@@ -47,5 +47,6 @@ var SlotPaneUI = function(x,y,w,h,s){ // 3x3
 		let mc = Math.floor(pos.x / this.slotSize);
 		let mr = Math.floor(pos.y / this.slotSize);
 		this.selectedIndex = Math.min(mr*3 + mc, this.runes.length - 1);
+		console.log("slot => " + mc + " " + mr);
 	}
 }
