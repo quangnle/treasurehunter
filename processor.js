@@ -24,7 +24,8 @@ var Processor = function(model){
 		this.model.runes.push(new RuneMove3());
 		this.model.runes.push(new RuneMove3());		// 9 move runes
 		
-		this.model.runes.push(new RuneGateway()); // 1 gateway rune
+		this.model.runes.push(new RuneGateway());
+		this.model.runes.push(new RuneGateway());		// 2 gateway rune
 	}
 		
 	this.moveUp = function(){
@@ -180,8 +181,8 @@ var Processor = function(model){
 		this.model.dice = Math.floor(Math.random()*4) + 1;
 		// check inventory if there is a rune that can be used for jumping
 		let jumpRunes = [];
-		for(let i =0; i < this.model.curPlayer.inventory.length; i++){
-			let rune = this.model.curPlayer.inventory[i];
+		for(let i =0; i < this.model.curPlayer.runes.length; i++){
+			let rune = this.model.curPlayer.runes[i];
 			if (rune.type == "jump") {
 				jumpRunes.push(rune);
 			}
@@ -199,9 +200,11 @@ var Processor = function(model){
 	}
 	
 	this.onAcceptRune = function(){
-		let receivedRune = this.model.runes.pop();		
-		this.model.receivedRune = receivedRune;
-		this.model.curPlayer.runes.push(receivedRune);
+		if (this.model.runes != null && this.model.runes.length > 0){
+			let rndIdx = Math.floor(Math.random() * this.model.runes.length); // randomly pick a rune in the rune collection
+			this.model.receivedRune = this.model.runes[rndIdx];
+			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
+		}
 	}
 	
 	this.onIgnoreRune = function(){
@@ -212,7 +215,6 @@ var Processor = function(model){
 		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.model.players.length;
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
 		this.model.curPlayer.actionPoints = 0;
-		
 		this.model.canRollToMove = true;
 		
 		// check if can jump to set status

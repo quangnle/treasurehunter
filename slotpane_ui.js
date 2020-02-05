@@ -5,7 +5,6 @@ var SlotPaneUI = function(x,y,s){ // 3x3
 	this.w = (s+4)*3;
 	this.h = (s+4)*3;
 	
-	
 	this.draw = function(){
 		push();
 		translate(this.x, this.y);
@@ -50,6 +49,12 @@ var SlotPaneUI = function(x,y,s){ // 3x3
 		console.log("slot => " + mc + " " + mr);
 		if (this.runes != null && this.runes.length > 0){
 			this.selectedIndex = Math.min(mr*3 + mc, this.runes.length - 1);
+			if (this.selectedIndex >= 0){
+				this.model.selectedRune = this.model.runes[this.selectedIndex];
+			}
+		} else {
+			this.selectedIndex = -1;
+			this.model.selectedRune = null;
 		}
 	}
 }
