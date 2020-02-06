@@ -31,7 +31,9 @@ var MainUI = function(w,h){
 		
 		for (let i=0; i< this.controls[this.model.drawMode].length; i++){
 			if (isInBound({"x":mx, "y":my}, this.controls[this.model.drawMode][i])){
-				this.controls[this.model.drawMode][i].onClicked(mx,my);
+				if (controls[this.model.drawMode][i].onClicked != null) {
+					this.controls[this.model.drawMode][i].onClicked(mx,my);
+				}
 			}
 		}
 	}
