@@ -4,7 +4,7 @@ export default class Player{
 		this.money = money;
 		this.actionPoints = 0;
 		this.runes = [];
-		this.state = "human"; // "evil"
+		this.state = "human"; // "evil", "dead"
 		this.r = row;
 		this.c = col;
 		

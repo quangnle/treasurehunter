@@ -151,7 +151,7 @@ export default class Processor{
 					}
 					
 					// if enough souls have been destroyed, then victory
-					if (this.model.board.destroyedSouls.length == this.model.board.players.length){
+					if (this.model.board.destroyedSouls.length == this.model.board.players.length - 1){
 						this.model.drawMode = "end";
 					}
 				}
@@ -172,6 +172,34 @@ export default class Processor{
 	}
 	
 	teleport(teleValue) {
+	}
+
+	killEvil(killer, killed){
+		if (this.model.board.destroyedSouls != null){
+			let isDestroyed = false;
+			for (let i = 0; i< this.model.board.destroyedSouls.length; i++){
+				if (killed.name == this.model.board.destroyedSouls[i]){
+					isDestroyed = true;
+					break;
+				}
+			}
+
+			if (isDestroyed){ // double charged and removed
+				killed.money -= 10000;
+				killed.status = "dead";
+				killer.money += 10000;
+			} else { // charged and back to the starting point
+				killed.money -= 5000;
+				killer.money += 5000;
+				killed.r = killed.startPoint.r;
+				killed.c = killed.startPoint.c;
+			}
+		}
+	}
+
+	killHuman(killer, killed){
+		killer.money += 20000;
+		this.model.drawMode = "end";
 	}
 	
 	rollMove(){
