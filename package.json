@@ -1,0 +1,27 @@
+{
+  "name": "chessss",
+  "version": "1.0.0",
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "webpack-dev-server --mode development --progress --colors --inline --hot --open",
+    "prebuild": "npm install",
+    "build": "npm run clean && webpack --progress --colors -p"
+  },
+  "dependencies": {
+    "p5": "^0.10.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "7.1.0",
+    "babel-loader": "8.0.4",
+    "copy-webpack-plugin": "4.5.4",
+    "css-loader": "1.0.0",
+    "node-sass": "4.9.4",
+    "rimraf": "2.6.2",
+    "sass-loader": "7.1.0",
+    "style-loader": "0.23.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
