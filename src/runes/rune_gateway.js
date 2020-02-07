@@ -5,6 +5,7 @@ export default class RuneGateway{
 		this.description = "back to the nearest gateway";
 		this.owner = null;
 		this.imgPath = "imgs/r_gateway.png";
+		this.img = window.p.loadImage(this.imgPath);
 	}
 	
 	apply(processor){

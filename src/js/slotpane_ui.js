@@ -27,13 +27,13 @@ export default class SlotPaneUI{
 		}
 		
 		for (let i=0; i < this.runes.length; i++){
-			let img =window.p.loadImage(this.runes[i].imgPath);
+			let img =window.p.loadImage();
 			if (i != this.selectedIndex){
-				window.p.image(img, (i % 3)*(this.slotSize + 2), Math.floor(i/3)*(this.slotSize + 2), this.slotSize, this.slotSize);
+				window.p.image(this.runes[i].img, (i % 3)*(this.slotSize + 2), Math.floor(i/3)*(this.slotSize + 2), this.slotSize, this.slotSize);
 			} else {
 				window.p.strokeWeight(4);
 				window.p.rect((i%3)*(this.slotSize + 2), Math.floor(i/3)*(this.slotSize + 2),this.slotSize,this.slotSize);
-				window.p.image(img, (i % 3)*(this.slotSize + 2), Math.floor(i/3)*(this.slotSize + 2), this.slotSize, this.slotSize);
+				window.p.image(this.runes[i].img, (i % 3)*(this.slotSize + 2), Math.floor(i/3)*(this.slotSize + 2), this.slotSize, this.slotSize);
 			}
 		}
 		

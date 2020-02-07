@@ -5,6 +5,7 @@ export default class RuneUnluck{
 		this.description = "pay each other player $5,000";
 		this.owner = null;
 		this.imgPath = "imgs/r_unluck.png";
+		this.img = window.p.loadImage(this.imgPath);
 	}
 	
 	apply(processor){

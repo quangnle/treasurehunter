@@ -5,6 +5,7 @@ export default class RuneLuck{
 		this.description = "collect $5,000 from each player";
 		this.owner = null;
 		this.imgPath = "imgs/r_luck.png";
+		this.img = window.p.loadImage(this.imgPath);
 	}
 	
 	apply(processor){

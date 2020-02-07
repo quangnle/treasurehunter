@@ -29,8 +29,7 @@ export default class GetRunePaneUI{
 		// draw rune's frame
 		window.p.rect((this.w >> 1) - 25, 40, 50, 50);
 		if (this.model.receivedRune != null){
-			let img = window.p.loadImage(this.model.receivedRune.imgPath);
-			window.p.image(img, (this.w >> 1) - 25,40,50,50);
+			window.p.image(this.model.receivedRune.img, (this.w >> 1) - 25,40,50,50);
 			
 			//draw button Close
 			this.btnClose.draw();

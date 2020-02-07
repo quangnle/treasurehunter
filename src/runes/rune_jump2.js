@@ -5,6 +5,7 @@ export default class RuneJump2{
 		this.description = "increase rolled value by 2 for jumping";
 		this.owner = null;
 		this.imgPath = "imgs/r_jump2.png";
+		this.img = window.p.loadImage(this.imgPath);
 	}
 	
 	apply(processor){

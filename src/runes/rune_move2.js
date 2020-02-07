@@ -5,6 +5,7 @@ export default class RuneMove2{
 		this.description = "increase rolled value by 2";
 		this.owner = null;
 		this.imgPath = "imgs/r_move2.png";
+		this.img = window.p.loadImage(this.imgPath);
 	}
 	
 	apply(processor){

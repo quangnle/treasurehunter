@@ -13,9 +13,6 @@ var processor = null;
 var mainui = new MainUI();
 console.log(mainui);
 
-
-
-
 const sketch = p => {
 	p.setup = () => {
 		p.createCanvas(1200, 800);
