@@ -155,7 +155,7 @@ export default class Processor{
 						this.model.drawMode = "end";
 					}
 				}
-			} else if (cell.cellType == "gateway") {
+			} else if (cell.cellType == "gate") {
 				// enable jumping
 				this.model.canRollToJump = true;
 			}

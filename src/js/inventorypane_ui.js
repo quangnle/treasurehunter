@@ -25,7 +25,7 @@ export default class InventoryPaneUI{
 		this.slotPane.draw();
 		
 		//draw buttons 
-		if (!this.model.canUseRune){
+		if (this.model.selectedRune == null){
 			this.btnUseRune.fillColor = "#faa";
 		} else {
 			this.btnUseRune.fillColor = "#aaa";
@@ -45,7 +45,7 @@ export default class InventoryPaneUI{
 		console.log("dp =>" + (mx-this.x) + " " + (my-this.y));
 		
 		// btnUseRune is clicked
-		if (this.model.canUseRune){
+		if (this.model.selectedRune != null){
 			if (window.p.isInBound(pos, this.btnUseRune)) {
 				console.log("rune");
 				if (this.onUseRune != null && this.model.selectedRune != null){
