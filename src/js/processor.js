@@ -171,7 +171,24 @@ export default class Processor{
 		player.c = cell.c;
 	}
 	
-	teleport(teleValue) {
+	teleport() {
+		// get current gate index
+		let idx = -1;
+		for(let i=0; i<this.model.board.gateways.length; i++){
+			if (this.model.board.gateways[i].r == this.curPlayer.r && this.model.board.gateways[i].c == this.curPlayer.c){
+				idx = i;
+				break;
+			}
+		}
+
+		// set new position 
+		if (idx >=0 ) {
+			idx = (this.model.dice + idx) % this.model.board.gateways.length;
+			this.model.curPlayer.r = this.model.board.gateways[idx].r;
+			this.model.curPlayer.c = this.model.board.gateways[idx].c;
+			this.model.curPlayer.actionPoints = 0;
+			this.model.canRollToJump = false;
+		}
 	}
 
 	killEvil(killer, killed){
@@ -231,7 +248,7 @@ export default class Processor{
 			this.model.drawMode = "selectjumprune";
 		}
 		
-		this.model.canRollToJump = false;
+		this.teleport();
 	}
 		
 	onGetRuneClosed(){
