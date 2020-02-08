@@ -10,7 +10,8 @@ export default class RuneJump2{
 	
 	apply(processor){
 		if (processor.gameState == "afterRoll"){ 
-			this.processor.model.jumpBuff = 2;
+			processor.model.jumpBuff = 2;
+			processor.teleport();
 		}
 	}
 }

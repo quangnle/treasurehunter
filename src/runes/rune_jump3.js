@@ -10,7 +10,8 @@ export default class RuneJump3{
 
 	apply(processor){
 		if (processor.gameState == "afterRoll"){ 
-			this.processor.model.jumpBuff = 3;
+			processor.model.jumpBuff = 3;
+			processor.teleport();
 		}
 	}
 }

@@ -8,6 +8,7 @@ import DicePaneUI from "./dicepane_ui";
 import PlayerPaneUI from "./playerpane_ui";
 import InventoryPaneUI from "./inventorypane_ui";
 import GetRunePaneUI from "./getrunepane_ui";
+import SelectJumpRunePaneUI from "./select_jumprune_pane_ui";
 
 var processor = null;
 var mainui = new MainUI();
@@ -54,6 +55,11 @@ const sketch = p => {
 		mainui.addControl("getrune", getrunepaneui);
 		
 		// select rune mode "selectjumprune"
+		let selectjumprunepaneui = new SelectJumpRunePaneUI(150,150,300,120);
+		selectjumprunepaneui.onSelectJumpRune = processor.onSelectJumpRune;
+		selectjumprunepaneui.onCancelJumpRune = processor.onCancelJumpRune;
+		mainui.addControl("selectjumprune", getrunepaneui);
+
 		mainui.bind(model);	
 	}
 

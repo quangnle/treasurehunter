@@ -183,7 +183,7 @@ export default class Processor{
 
 		// set new position 
 		if (idx >=0 ) {
-			idx = (this.model.dice + idx) % this.model.board.gateways.length;
+			idx = (this.model.dice + this.model.jumpBuff + idx) % this.model.board.gateways.length;
 			this.model.curPlayer.r = this.model.board.gateways[idx].r;
 			this.model.curPlayer.c = this.model.board.gateways[idx].c;
 			this.model.curPlayer.actionPoints = 0;
@@ -221,6 +221,7 @@ export default class Processor{
 	
 	rollMove(){
 		this.model.dice = Math.floor(Math.random()*10)+1;
+		this.model.gameState = "afterRoll";
 		
 		if (this.model.dice == 10){
 			this.model.drawMode = "getrune";
@@ -235,6 +236,8 @@ export default class Processor{
 	
 	rollJump(){
 		this.model.dice = Math.floor(Math.random()*4) + 1;
+		this.model.gameState = "afterRoll";
+
 		// check inventory if there is a rune that can be used for jumping
 		let jumpRunes = [];
 		for(let i =0; i < this.model.curPlayer.runes.length; i++){
@@ -246,9 +249,9 @@ export default class Processor{
 		
 		if (jumpRunes.length > 0){
 			this.model.drawMode = "selectjumprune";
+		} else {
+			this.teleport();
 		}
-		
-		this.teleport();
 	}
 		
 	onGetRuneClosed(){
@@ -264,6 +267,19 @@ export default class Processor{
 	}
 	
 	onIgnoreRune(){
+		this.model.drawMode = "game";
+	}
+
+	onSelectJumpRune(id){
+		this.model.curPlayer.runes[id].apply(this);
+		
+		// remove rune from player's runes
+		// code here!
+
+		this.model.drawMode = "game";
+	}
+
+	onCancelJumpRune(){
 		this.model.drawMode = "game";
 	}
 	
@@ -286,6 +302,9 @@ export default class Processor{
 	
 	onUseRune(){
 		this.model.selectedRune.apply(this);
+
+		// remove rune from player's runes
+		// code here!
 	}
 	
 	//selecting a rune in the inventory
@@ -303,16 +322,4 @@ export default class Processor{
 		}
 		return result;
 	}	
-	
-	getGatewayIdx(r,c){
-		let result = -1; // is not in any gateway
-		for (let i = 0; i < this.model.board.gateways.length; i++){
-			let g = this.model.board.gateways[i];
-			if (this.model.curPlayer.r == g.r && this.model.curPlayer.c == g.c){
-				result = i;
-				break;
-			}
-		}
-		return result;
-	}
 }
