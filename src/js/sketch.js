@@ -38,7 +38,7 @@ const sketch = p => {
 		dicepaneui.onRollJump = processor.rollJump;	
 		mainui.addControl("game", dicepaneui);
 		
-		let playerpaneui = new PlayerPaneUI(640,150,150,95);
+		let playerpaneui = new PlayerPaneUI(640,150,150,100);
 		// endturn event handling
 		playerpaneui.onEndTurn = processor.endTurn;	
 		mainui.addControl("game", playerpaneui);

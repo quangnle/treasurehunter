@@ -263,6 +263,7 @@ export default class Processor{
 			let rndIdx = Math.floor(Math.random() * this.model.runes.length); // randomly pick a rune in the rune collection
 			this.model.receivedRune = this.model.runes[rndIdx];
 			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
+			this.model.receivedRune = null;
 		}
 	}
 	
@@ -274,7 +275,14 @@ export default class Processor{
 		this.model.curPlayer.runes[id].apply(this);
 		
 		// remove rune from player's runes
-		// code here!
+		let idx = -1;
+		for (let i=0; i<this.model.curPlayer.runes.length; i++){
+			if (this.model.curPlayer.runes[i].name == this.model.selectedRune.name){
+				idx = i;
+				break;
+			}
+		}
+		this.curPlayer.runes.splice(idx, 1);
 
 		this.model.drawMode = "game";
 	}
@@ -304,7 +312,15 @@ export default class Processor{
 		this.model.selectedRune.apply(this);
 
 		// remove rune from player's runes
-		// code here!
+		let idx = -1;
+		for (let i=0; i<this.model.curPlayer.runes.length; i++){
+			if (this.model.curPlayer.runes[i].name == this.model.selectedRune.name){
+				idx = i;
+				break;
+			}
+		}
+
+		this.curPlayer.runes.splice(idx, 1);
 	}
 	
 	//selecting a rune in the inventory

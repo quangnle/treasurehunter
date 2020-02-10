@@ -7,7 +7,7 @@ export default class PlayerPaneUI{
 		this.y = y;
 		this.w = w;
 		this.h = h;
-		this.btnMove = new ButtonUI(5,70,w-10,20,"End Turn", "#aaa");
+		this.btnMove = new ButtonUI(5,75,w-10,20,"End Turn", "#aaa");
 	}
 	
 	draw(){
@@ -25,11 +25,16 @@ export default class PlayerPaneUI{
 		window.p.textAlign(window.p.CENTER, window.p.CENTER);
 		window.p.text(this.model.curPlayer.name, 0.5*this.w, 35);
 		
-		//
-		window.p.textSize(16);
-		window.p.textAlign(window.p.CENTER, window.p.CENTER);
-		window.p.text("Action Points= " + this.model.curPlayer.actionPoints, 0.5*this.w, 60);
-		
+		// draw money
+		window.p.textSize(10);
+		window.p.textAlign(window.p.LEFT, window.p.CENTER);
+		window.p.text("Money= $" + this.model.curPlayer.money, 0.1*this.w, 55);
+
+		// draw action point
+		window.p.textSize(10);
+		window.p.textAlign(window.p.LEFT, window.p.CENTER);
+		window.p.text("Action Points= " + this.model.curPlayer.actionPoints, 0.1*this.w, 65);
+
 		//draw endturn btn
 		this.btnMove.draw();
 		
