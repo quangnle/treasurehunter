@@ -6,6 +6,9 @@ export default class ButtonUI{
 		this.h = h;
 		this.caption = caption;
 		this.fillColor = fillColor;
+		if (!this.fillcolor){
+			this.fillcolor = "#444";
+		}
 	}
 	
 	draw(){
