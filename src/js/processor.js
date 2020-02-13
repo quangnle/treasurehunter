@@ -90,7 +90,7 @@ export default class Processor{
 		// find all players are standing in the targeted cell
 		for (let i=0; i < this.model.board.players.length; i++){
 			let pi = this.model.board.players[i];
-			if (pi.name != player.name && player.r == pi.r && player.c == pi.c){
+			if (pi.name != player.name && cell.r == pi.r && cell.c == pi.c){
 				overlappedPlayer.push(this.model.board.players[i]);
 			}
 		}
@@ -250,11 +250,14 @@ export default class Processor{
 		if (jumpRunes.length > 0){
 			this.model.drawMode = "selectjumprune";
 		} else {
-			this.teleport();
+			processor.teleport();
 		}
 	}
 		
 	onGetRuneClosed(){
+		this.model.curPlayer.actionPoints = 0;
+		this.model.canRollToMove = false;
+		this.model.receivedRune = null;
 		this.model.drawMode = "game";
 	}
 	
@@ -263,7 +266,6 @@ export default class Processor{
 			let rndIdx = Math.floor(Math.random() * this.model.runes.length); // randomly pick a rune in the rune collection
 			this.model.receivedRune = this.model.runes[rndIdx];
 			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
-			this.model.receivedRune = null;
 		}
 	}
 	
@@ -320,7 +322,7 @@ export default class Processor{
 			}
 		}
 
-		this.curPlayer.runes.splice(idx, 1);
+		this.model.curPlayer.runes.splice(idx, 1);
 	}
 	
 	//selecting a rune in the inventory

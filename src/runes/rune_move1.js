@@ -8,9 +8,9 @@ export default class RuneMove1{
 		this.img = window.p.loadImage(this.imgPath);
 	}
 	
-	apply(processor){
-		if (processor.gameState == "beforeRoll"){ 
-			this.processor.model.moveBuff = 1;
+	apply(){
+		if (window.p.processor.gameState == "beforeRoll"){ 
+			window.p.p.processor.model.moveBuff = 1;
 		}
 	}
 }

@@ -8,11 +8,11 @@ export default class RuneUnluck{
 		this.img = window.p.loadImage(this.imgPath);
 	}
 	
-	apply(processor){
-		let opponents = processor.getAllOpponents();
+	apply(){
+		let opponents = window.p.processor.getAllOpponents();
 		for (let i=0; i<opponents.length;i++){
 			opponents.money += 5000;
-			processor.model.curPlayer.money -= 5000;
+			window.p.processor.model.curPlayer.money -= 5000;
 		}
 	}
 }

@@ -10,11 +10,12 @@ import InventoryPaneUI from "./inventorypane_ui";
 import GetRunePaneUI from "./getrunepane_ui";
 import SelectJumpRunePaneUI from "./select_jumprune_pane_ui";
 
-var processor = null;
 var mainui = new MainUI();
 console.log(mainui);
 
 const sketch = p => {
+	p.processor = null;
+
 	p.setup = () => {
 		p.createCanvas(1200, 800);
 		let model = new GameInfo();
@@ -24,8 +25,8 @@ const sketch = p => {
 		model.curPlayerIdx = 0;
 		model.curPlayer = model.players[model.curPlayerIdx];
 		
-		processor = new Processor(model);
-		processor.loadRunes();
+		p.processor = new Processor(model);
+		p.processor.loadRunes();
 		
 		let boardui = new BoardUI(0,0,630,630);	
 		boardui.initTileImages();	
@@ -34,30 +35,30 @@ const sketch = p => {
 		
 		let dicepaneui = new DicePaneUI(640,0,150,140);
 		// roll dice events handling
-		dicepaneui.onRollMove = processor.rollMove;
-		dicepaneui.onRollJump = processor.rollJump;	
+		dicepaneui.onRollMove = p.processor.rollMove;
+		dicepaneui.onRollJump = p.processor.rollJump;	
 		mainui.addControl("game", dicepaneui);
 		
 		let playerpaneui = new PlayerPaneUI(640,150,150,100);
 		// endturn event handling
-		playerpaneui.onEndTurn = processor.endTurn;	
+		playerpaneui.onEndTurn = p.processor.endTurn;	
 		mainui.addControl("game", playerpaneui);
 		
 		let inventorypaneui = new InventoryPaneUI(640,260,150,200);
-		inventorypaneui.onUseRune = processor.onUseRune;
+		inventorypaneui.onUseRune = p.processor.onUseRune;
 		mainui.addControl("game", inventorypaneui);
 		
 		// get rune mode
 		let getrunepaneui = new GetRunePaneUI(150,150,300,120);
-		getrunepaneui.onAcceptRune = processor.onAcceptRune;
-		getrunepaneui.onIgnoreRune = processor.onIgnoreRune;
-		getrunepaneui.onClose = processor.onGetRuneClosed;
+		getrunepaneui.onAcceptRune = p.processor.onAcceptRune;
+		getrunepaneui.onIgnoreRune = p.processor.onIgnoreRune;
+		getrunepaneui.onClose = p.processor.onGetRuneClosed;
 		mainui.addControl("getrune", getrunepaneui);
 		
 		// select rune mode "selectjumprune"
 		let selectjumprunepaneui = new SelectJumpRunePaneUI(150,150,300,120);
-		selectjumprunepaneui.onSelectJumpRune = processor.onSelectJumpRune;
-		selectjumprunepaneui.onCancelJumpRune = processor.onCancelJumpRune;
+		selectjumprunepaneui.onSelectJumpRune = p.processor.onSelectJumpRune;
+		selectjumprunepaneui.onCancelJumpRune = p.processor.onCancelJumpRune;
 		mainui.addControl("selectjumprune", getrunepaneui);
 
 		mainui.bind(model);	
@@ -82,13 +83,13 @@ const sketch = p => {
 
 	p.keyPressed = () => {
 		if (p.keyCode === p.LEFT_ARROW) {
-			processor.moveLeft();
+			p.processor.moveLeft();
 		} else if (p.keyCode === p.RIGHT_ARROW) {
-			processor.moveRight();
+			p.processor.moveRight();
 		} else if (p.keyCode === p.UP_ARROW) {
-			processor.moveUp();
+			p.processor.moveUp();
 		} else if (p.keyCode === p.DOWN_ARROW) {
-			processor.moveDown();
+			p.processor.moveDown();
 		}
 	}
 }
