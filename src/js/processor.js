@@ -9,7 +9,6 @@ import RuneGateway from "../runes/rune_gateway";
 
 export default class Processor{
 	constructor(model){
-	
 		this.model = model;
 		this.gameState = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
 	}
@@ -52,7 +51,7 @@ export default class Processor{
 	
 	moveDown(){
 		let curPlayer = this.model.curPlayer;
-		if (curPlayer.r + 1 >= 0 && curPlayer.r < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
+		if (curPlayer.r + 1 >= 0 && curPlayer.r+1 < this.model.board.nRows && curPlayer.c >= 0 && curPlayer.c < this.model.board.nCols){
 			let cell = this.model.board.cells[curPlayer.r + 1][curPlayer.c];
 			if (curPlayer.actionPoints >= cell.value){
 				curPlayer.actionPoints -= cell.value;
@@ -172,15 +171,16 @@ export default class Processor{
 	}
 	
 	teleport() {
+		
 		// get current gate index
 		let idx = -1;
 		for(let i=0; i<this.model.board.gateways.length; i++){
-			if (this.model.board.gateways[i].r == this.curPlayer.r && this.model.board.gateways[i].c == this.curPlayer.c){
+			if (this.model.board.gateways[i].r == this.model.curPlayer.r && this.model.board.gateways[i].c == this.model.curPlayer.c){
 				idx = i;
 				break;
 			}
 		}
-
+		console.log("teleporting to",this.model.dice + this.model.jumpBuff + idx);
 		// set new position 
 		if (idx >=0 ) {
 			idx = (this.model.dice + this.model.jumpBuff + idx) % this.model.board.gateways.length;
@@ -223,7 +223,8 @@ export default class Processor{
 		this.model.dice = Math.floor(Math.random()*10)+1;
 		this.model.gameState = "afterRoll";
 		
-		if (this.model.dice == 10){
+		if (this.model.dice == 10 || (this.runeTesting&&this.model.dice>=this.runeTesting) ){
+			
 			this.model.drawMode = "getrune";
 		} else {
 			this.model.curPlayer.actionPoints = this.model.dice;
@@ -240,14 +241,16 @@ export default class Processor{
 
 		// check inventory if there is a rune that can be used for jumping
 		let jumpRunes = [];
+		console.log(this.model.curPlayer,"trying to jump");
 		for(let i =0; i < this.model.curPlayer.runes.length; i++){
 			let rune = this.model.curPlayer.runes[i];
-			if (rune.type == "jump") {
+			if (rune.runeType == "jump") {
 				jumpRunes.push(rune);
 			}
 		}
 		
 		if (jumpRunes.length > 0){
+			console.log("select jump rune ? anyone ?");
 			this.model.drawMode = "selectjumprune";
 		} else {
 			this.teleport();
@@ -261,29 +264,33 @@ export default class Processor{
 	onAcceptRune(){
 		if (this.model.runes != null && this.model.runes.length > 0){
 			let rndIdx = Math.floor(Math.random() * this.model.runes.length); // randomly pick a rune in the rune collection
+			console.log("generating a rune for you :",rndIdx,this.model.runes[rndIdx]);
 			this.model.receivedRune = this.model.runes[rndIdx];
 			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
-			this.model.receivedRune = null;
+			// this.model.receivedRune = null;
+			this.model.drawMode = "game";
 		}
 	}
 	
 	onIgnoreRune(){
+		// this.model.receivedRune = null;
 		this.model.drawMode = "game";
 	}
 
 	onSelectJumpRune(id){
+		console.log("applying jump rune",this.model.curPlayer.runes[id])
 		this.model.curPlayer.runes[id].apply(this);
 		
 		// remove rune from player's runes
-		let idx = -1;
-		for (let i=0; i<this.model.curPlayer.runes.length; i++){
-			if (this.model.curPlayer.runes[i].name == this.model.selectedRune.name){
-				idx = i;
-				break;
-			}
+		let myRunes = this.model.curPlayer.runes;
+		if (id<myRunes.length){
+			let lastRune = myRunes.pop();
+			myRunes[id] = lastRune;
+		}else{
+			myRunes.pop();
 		}
-		this.curPlayer.runes.splice(idx, 1);
-
+		console.log("after apply :",this.model.curPlayer);
+		this.teleport();
 		this.model.drawMode = "game";
 	}
 
@@ -296,6 +303,7 @@ export default class Processor{
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
 		this.model.curPlayer.actionPoints = 0;
 		this.model.canRollToMove = true;
+		this.model.receivedRune = null;
 		
 		// check if can jump to set status
 		this.model.canRollToJump = false;
@@ -320,7 +328,7 @@ export default class Processor{
 			}
 		}
 
-		this.curPlayer.runes.splice(idx, 1);
+		this.model.curPlayer.runes.splice(idx, 1);
 	}
 	
 	//selecting a rune in the inventory
