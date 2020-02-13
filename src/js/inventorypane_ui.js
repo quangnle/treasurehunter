@@ -47,7 +47,7 @@ export default class InventoryPaneUI{
 		// btnUseRune is clicked
 		if (this.model.selectedRune != null){
 			if (window.p.isInBound(pos, this.btnUseRune)) {
-				console.log("rune");
+				console.log("using rune",this.model.selectedRune);
 				if (this.onUseRune != null && this.model.selectedRune != null){
 					this.onUseRune();
 				}
