@@ -34,37 +34,37 @@ const sketch = p => {
 		
 		let dicepaneui = new DicePaneUI(640,0,150,140);
 		// roll dice events handling
-		dicepaneui.onRollMove = processor.rollMove;
-		dicepaneui.onRollJump = processor.rollJump;	
+		dicepaneui.onRollMove = processor.rollMove.bind(processor);
+		dicepaneui.onRollJump = processor.rollJump.bind(processor);	
 		mainui.addControl("game", dicepaneui);
 		
 		let playerpaneui = new PlayerPaneUI(640,150,150,100);
 		// endturn event handling
-		playerpaneui.onEndTurn = processor.endTurn;	
+		playerpaneui.onEndTurn = processor.endTurn.bind(processor);	
 		mainui.addControl("game", playerpaneui);
 		
 		let inventorypaneui = new InventoryPaneUI(640,260,150,200);
-		inventorypaneui.onUseRune = processor.onUseRune;
+		inventorypaneui.onUseRune = processor.onUseRune.bind(processor);
 		mainui.addControl("game", inventorypaneui);
 		
 		// get rune mode
 		let getrunepaneui = new GetRunePaneUI(150,150,300,120);
-		getrunepaneui.onAcceptRune = processor.onAcceptRune;
-		getrunepaneui.onIgnoreRune = processor.onIgnoreRune;
-		getrunepaneui.onClose = processor.onGetRuneClosed;
+		getrunepaneui.onAcceptRune = processor.onAcceptRune.bind(processor);
+		getrunepaneui.onIgnoreRune = processor.onIgnoreRune.bind(processor);
+		getrunepaneui.onClose = processor.onGetRuneClosed.bind(processor);
 		mainui.addControl("getrune", getrunepaneui);
 		
 		// select rune mode "selectjumprune"
 		let selectjumprunepaneui = new SelectJumpRunePaneUI(150,150,300,120);
-		selectjumprunepaneui.onSelectJumpRune = processor.onSelectJumpRune;
-		selectjumprunepaneui.onCancelJumpRune = processor.onCancelJumpRune;
-		mainui.addControl("selectjumprune", getrunepaneui);
+		selectjumprunepaneui.onSelectJumpRune = processor.onSelectJumpRune.bind(processor);
+		selectjumprunepaneui.onCancelJumpRune = processor.onCancelJumpRune.bind(processor);
+		mainui.addControl("selectjumprune", selectjumprunepaneui);
 
 		mainui.bind(model);	
 	}
 
 	p.isInBound = (pos, region) => {
-		console.log("is in bound => " + pos);
+		console.log("is in bound => ",pos,region);
 		if ((pos.x > region.x && pos.x < region.x + region.w) && 
 			(pos.y > region.y && pos.y < region.y + region.h)) 
 			return true;
