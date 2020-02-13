@@ -8,10 +8,10 @@ export default class RuneJump1{
 		this.img = window.p.loadImage(this.imgPath);
 	}
 	
-	apply(processor){
-		if (processor.gameState == "afterRoll"){ 
-			processor.model.jumpBuff = 1;
-			processor.teleport();
+	apply(){
+		if (window.p.processor.gameState == "afterRoll"){ 
+			window.p.processor.model.jumpBuff = 1;
+			window.p.processor.teleport();
 		}
 	}
 }

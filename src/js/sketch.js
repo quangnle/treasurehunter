@@ -10,11 +10,12 @@ import InventoryPaneUI from "./inventorypane_ui";
 import GetRunePaneUI from "./getrunepane_ui";
 import SelectJumpRunePaneUI from "./select_jumprune_pane_ui";
 
-var processor = null;
 var mainui = new MainUI();
 console.log(mainui);
 
 const sketch = p => {
+	p.processor = null;
+
 	p.setup = () => {
 		p.createCanvas(1200, 800);
 		let model = new GameInfo();
@@ -24,8 +25,8 @@ const sketch = p => {
 		model.curPlayerIdx = 0;
 		model.curPlayer = model.players[model.curPlayerIdx];
 		
-		processor = new Processor(model);
-		processor.loadRunes();
+		p.processor = new Processor(model);
+		p.processor.loadRunes();
 		
 		let boardui = new BoardUI(0,0,630,630);	
 		boardui.initTileImages();	
@@ -82,13 +83,13 @@ const sketch = p => {
 
 	p.keyPressed = () => {
 		if (p.keyCode === p.LEFT_ARROW) {
-			processor.moveLeft();
+			p.processor.moveLeft();
 		} else if (p.keyCode === p.RIGHT_ARROW) {
-			processor.moveRight();
+			p.processor.moveRight();
 		} else if (p.keyCode === p.UP_ARROW) {
-			processor.moveUp();
+			p.processor.moveUp();
 		} else if (p.keyCode === p.DOWN_ARROW) {
-			processor.moveDown();
+			p.processor.moveDown();
 		}
 	}
 }

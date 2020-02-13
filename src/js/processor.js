@@ -89,7 +89,7 @@ export default class Processor{
 		// find all players are standing in the targeted cell
 		for (let i=0; i < this.model.board.players.length; i++){
 			let pi = this.model.board.players[i];
-			if (pi.name != player.name && player.r == pi.r && player.c == pi.c){
+			if (pi.name != player.name && cell.r == pi.r && cell.c == pi.c){
 				overlappedPlayer.push(this.model.board.players[i]);
 			}
 		}
@@ -253,11 +253,14 @@ export default class Processor{
 			console.log("select jump rune ? anyone ?");
 			this.model.drawMode = "selectjumprune";
 		} else {
-			this.teleport();
+			processor.teleport();
 		}
 	}
 		
 	onGetRuneClosed(){
+		this.model.curPlayer.actionPoints = 0;
+		this.model.canRollToMove = false;
+		this.model.receivedRune = null;
 		this.model.drawMode = "game";
 	}
 	
@@ -267,7 +270,6 @@ export default class Processor{
 			console.log("generating a rune for you :",rndIdx,this.model.runes[rndIdx]);
 			this.model.receivedRune = this.model.runes[rndIdx];
 			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
-			// this.model.receivedRune = null;
 			this.model.drawMode = "game";
 		}
 	}

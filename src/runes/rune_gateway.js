@@ -8,8 +8,8 @@ export default class RuneGateway{
 		this.img = window.p.loadImage(this.imgPath);
 	}
 	
-	apply(processor){
-		let curPlayer = processor.model.curPlayer;
+	apply(){
+		let curPlayer = window.p.processor.model.curPlayer;
 		let minDist = 10000;
 		let idx = 0;
 		
