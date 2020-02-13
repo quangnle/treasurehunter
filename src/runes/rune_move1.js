@@ -10,7 +10,7 @@ export default class RuneMove1{
 	
 	apply(processor){
 		if (processor.gameState == "beforeRoll"){ 
-			this.processor.model.moveBuff = 1;
+			processor.model.moveBuff = 1;
 		}
 	}
 }

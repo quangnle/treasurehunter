@@ -10,7 +10,7 @@ export default class RuneMove2{
 	
 	apply(processor){
 		if (processor.gameState == "beforeRoll"){ 
-			this.processor.model.moveBuff = 2;
+			processor.model.moveBuff = 2;
 		}
 	}
 }

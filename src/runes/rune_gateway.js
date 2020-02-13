@@ -14,8 +14,8 @@ export default class RuneGateway{
 		let idx = 0;
 		
 		// find the nearest gateway
-		for (let i=0; i< processor.model.gateways.length; i++){
-			let g = processor.model.gateways[i];
+		for (let i=0; i< processor.model.board.gateways.length; i++){
+			let g = processor.model.board.gateways[i];
 			let d = (g.r - curPlayer.r)*(g.r - curPlayer.r) + (g.c - curPlayer.c)*(g.c - curPlayer.c);
 			if (minDist > d){
 				minDist = d;
@@ -24,7 +24,7 @@ export default class RuneGateway{
 		}
 		
 		// set position to player
-		processor.model.curPlayer.r = processor.model.gateways[idx].r;
-		processor.model.curPlayer.c = processor.model.gateways[idx].c;
+		processor.model.curPlayer.r = processor.model.board.gateways[idx].r;
+		processor.model.curPlayer.c = processor.model.board.gateways[idx].c;
 	}
 }
