@@ -51,7 +51,7 @@ export default class SlotPaneUI{
 		if (this.runes != null && this.runes.length > 0){
 			this.selectedIndex = Math.min(mr*3 + mc, this.runes.length - 1);
 			if (this.selectedIndex >= 0){
-				this.model.selectedRune = this.model.runes[this.selectedIndex];
+				this.model.selectedRune = this.model.curPlayer.runes[this.selectedIndex];
 			}
 		} else {
 			this.selectedIndex = -1;
