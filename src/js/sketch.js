@@ -35,30 +35,30 @@ const sketch = p => {
 		
 		let dicepaneui = new DicePaneUI(640,0,150,140);
 		// roll dice events handling
-		dicepaneui.onRollMove = processor.rollMove.bind(processor);
-		dicepaneui.onRollJump = processor.rollJump.bind(processor);	
+		dicepaneui.onRollMove = p.processor.rollMove.bind(p.processor);
+		dicepaneui.onRollJump = p.processor.rollJump.bind(p.processor);	
 		mainui.addControl("game", dicepaneui);
 		
 		let playerpaneui = new PlayerPaneUI(640,150,150,100);
 		// endturn event handling
-		playerpaneui.onEndTurn = processor.endTurn.bind(processor);	
+		playerpaneui.onEndTurn = p.processor.endTurn.bind(p.processor);	
 		mainui.addControl("game", playerpaneui);
 		
 		let inventorypaneui = new InventoryPaneUI(640,260,150,200);
-		inventorypaneui.onUseRune = processor.onUseRune.bind(processor);
+		inventorypaneui.onUseRune = p.processor.onUseRune.bind(p.processor);
 		mainui.addControl("game", inventorypaneui);
 		
 		// get rune mode
 		let getrunepaneui = new GetRunePaneUI(150,150,300,120);
-		getrunepaneui.onAcceptRune = processor.onAcceptRune.bind(processor);
-		getrunepaneui.onIgnoreRune = processor.onIgnoreRune.bind(processor);
-		getrunepaneui.onClose = processor.onGetRuneClosed.bind(processor);
+		getrunepaneui.onAcceptRune = p.processor.onAcceptRune.bind(p.processor);
+		getrunepaneui.onIgnoreRune = p.processor.onIgnoreRune.bind(p.processor);
+		getrunepaneui.onClose = p.processor.onGetRuneClosed.bind(p.processor);
 		mainui.addControl("getrune", getrunepaneui);
 		
 		// select rune mode "selectjumprune"
 		let selectjumprunepaneui = new SelectJumpRunePaneUI(150,150,300,120);
-		selectjumprunepaneui.onSelectJumpRune = processor.onSelectJumpRune.bind(processor);
-		selectjumprunepaneui.onCancelJumpRune = processor.onCancelJumpRune.bind(processor);
+		selectjumprunepaneui.onSelectJumpRune = p.processor.onSelectJumpRune.bind(p.processor);
+		selectjumprunepaneui.onCancelJumpRune = p.processor.onCancelJumpRune.bind(p.processor);
 		mainui.addControl("selectjumprune", selectjumprunepaneui);
 
 		mainui.bind(model);	
