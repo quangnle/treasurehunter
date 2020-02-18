@@ -192,26 +192,23 @@ export default class Processor{
 	}
 
 	killEvil(killer, killed){
-		if (this.model.board.destroyedSouls != null){
-			let isDestroyed = false;
-			for (let i = 0; i< this.model.board.destroyedSouls.length; i++){
-				if (killed.name == this.model.board.destroyedSouls[i]){
-					isDestroyed = true;
-					break;
-				}
-			}
-
-			if (isDestroyed){ // double charged and removed
-				killed.money -= 10000;
-				killed.status = "dead";
-				killer.money += 10000;
-			} else { // charged and back to the starting point
-				killed.money -= 5000;
-				killer.money += 5000;
-				killed.r = killed.startPoint.r;
-				killed.c = killed.startPoint.c;
+		let isSoulDestroyed = false;
+		for (let i = 0; i< this.model.board.destroyedSouls.length; i++){
+			if (killed.name == this.model.board.destroyedSouls[i]){
+				isSoulDestroyed = true;
+				break;
 			}
 		}
+
+		if (isSoulDestroyed){ // double charged
+			killed.money -= 10000;
+			killer.money += 10000;
+		} else { // charged and back to the starting point
+			killed.money -= 5000;
+			killer.money += 5000;				
+		}
+		killed.r = killed.startPoint.r;
+		killed.c = killed.startPoint.c;
 	}
 
 	killHuman(killer, killed){
@@ -227,9 +224,8 @@ export default class Processor{
 			
 			this.model.drawMode = "getrune";
 		} else {
-			this.model.curPlayer.actionPoints = this.model.dice;
-			this.model.dice += this.model.moveBuff;
-			this.model.dice = Math.min(9, this.model.dice);
+			this.model.curPlayer.actionPoints = this.model.dice + this.model.moveBuff;
+			this.model.curPlayer.actionPoints = Math.min(9, curPlayer.actionPoints);
 			this.model.moveBuff = 0; // disable dice buff
 			this.model.canRollToMove = false;
 		}
@@ -253,8 +249,9 @@ export default class Processor{
 			console.log("select jump rune ? anyone ?");
 			this.model.drawMode = "selectjumprune";
 		} else {
-			processor.teleport();
+			this.teleport();
 		}
+		this.model.canRollToMove = false;
 	}
 		
 	onGetRuneClosed(){
@@ -271,6 +268,8 @@ export default class Processor{
 			this.model.receivedRune = this.model.runes[rndIdx];
 			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
 			this.model.drawMode = "game";
+			this.model.canRollToMove = false;
+			this.model.canRollToJump = false;
 		}
 	}
 	
@@ -283,14 +282,18 @@ export default class Processor{
 		console.log("applying jump rune",this.model.curPlayer.runes[id])
 		this.model.curPlayer.runes[id].apply(this);
 		
-		// remove rune from player's runes
-		let myRunes = this.model.curPlayer.runes;
-		if (id<myRunes.length){
-			let lastRune = myRunes.pop();
-			myRunes[id] = lastRune;
-		}else{
-			myRunes.pop();
-		}
+		// // remove rune from player's runes
+		// let myRunes = this.model.curPlayer.runes;
+		// if (id<myRunes.length){
+		// 	let lastRune = myRunes.pop();
+		// 	myRunes[id] = lastRune;
+		// }else{
+		// 	myRunes.pop();
+		// }
+
+		// remove rune
+		this.model.curPlayer.runes.slice(id,1);
+
 		console.log("after apply :",this.model.curPlayer);
 		this.teleport();
 		this.model.drawMode = "game";

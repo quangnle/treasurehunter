@@ -23,7 +23,14 @@ export default class DicePaneUI{
 		window.p.fill(0);
 		window.p.textSize(40);
 		window.p.textAlign(window.p.CENTER, window.p.CENTER);
-		window.p.text(this.model.dice, 0.5*this.w, 60);
+		if (this.model.moveBuff > 0){
+			window.p.text(this.model.dice + "(" +this.model.moveBuff+ ")", 0.5*this.w, 60);
+		} else if (this.model.jumpBuff > 0) {
+			window.p.text(this.model.dice + "(" +this.model.jumpBuff+ ")", 0.5*this.w, 60);
+		} else {
+			window.p.text(this.model.dice, 0.5*this.w, 60);
+		}
+		
 		
 		//draw buttons 
 		if (!this.model.canRollToMove){
