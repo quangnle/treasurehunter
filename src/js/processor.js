@@ -10,7 +10,7 @@ import RuneGateway from "../runes/rune_gateway";
 export default class Processor{
 	constructor(model){
 		this.model = model;
-		this.gameState = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
+		this.model.gameState = "beforeRoll"; // "beforeRoll", "afterRoll", "beforeEndTurn"
 	}
 	
 	loadRunes(){
@@ -221,11 +221,10 @@ export default class Processor{
 		this.model.gameState = "afterRoll";
 		
 		if (this.model.dice == 10 || (this.runeTesting&&this.model.dice>=this.runeTesting) ){
-			
 			this.model.drawMode = "getrune";
 		} else {
 			this.model.curPlayer.actionPoints = this.model.dice + this.model.moveBuff;
-			this.model.curPlayer.actionPoints = Math.min(9, curPlayer.actionPoints);
+			this.model.curPlayer.actionPoints = Math.min(9, this.model.curPlayer.actionPoints);
 			this.model.moveBuff = 0; // disable dice buff
 			this.model.canRollToMove = false;
 		}
@@ -307,8 +306,9 @@ export default class Processor{
 		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.model.players.length;
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
 		this.model.curPlayer.actionPoints = 0;
-		this.model.canRollToMove = true;
-		this.model.receivedRune = null;
+		this.model.canRollToMove = true;		
+		this.model.receivedRune = null;		
+		this.model.gameState = "beforeRoll";
 		
 		// check if can jump to set status
 		this.model.canRollToJump = false;
