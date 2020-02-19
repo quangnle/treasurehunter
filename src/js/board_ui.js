@@ -56,9 +56,9 @@ export default class BoardUI{
 			for (let i=0; i< this.model.board.players.length; i++){
 				let player = this.model.board.players[i];
 				if (player.state == "human"){
-					window.p.image(this.plImages[i].human, player.c * this.cellSize + 5, player.r * this.cellSize + 5);
+					window.p.image(this.plImages[i].human, player.c * this.cellSize + 5 + 10*(i&1), player.r * this.cellSize + 5 + 5*(i>>1));
 				} else {
-					window.p.image(this.plImages[i].evil, player.c * this.cellSize + 5, player.r * this.cellSize + 5);
+					window.p.image(this.plImages[i].evil, player.c * this.cellSize + 5 + 10*(i&1), player.r * this.cellSize + 5 + 5*(i>>1));
 				}
 			}
 			

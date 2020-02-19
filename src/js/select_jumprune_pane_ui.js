@@ -27,7 +27,7 @@ export default class SelectJumpRunePaneUI{
 		// draw message
 		window.p.textSize(12);
 		window.p.textAlign(window.p.CENTER, window.p.CENTER);
-		window.p.text("Do you want to use a rune for this jump?", this.w >> 1, 20);
+		window.p.text("Do you want to use a rune for this jump? Current jump = " + this.model.dice, this.w >> 1, 30);
 		
 		let j = 0;
 		// draw rune's frame

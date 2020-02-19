@@ -20,9 +20,9 @@ export default class Board{
 		this.nRows = nRows;
 		this.nCols = nCols;
 		
+		this.destroyedSouls = [];
 		this.starts = [{"r":0, "c":0}, {"r":0, "c":nCols}, {"r":nRows, "c":nCols}, {"r":nRows, "c":0}];
 		this.gateways = [{"r":3, "c":3}, {"r":3, "c":17}, {"r":17, "c":17}, {"r":17, "c":3}];
-		this.destroyedSouls = [];
 	}
 	
 	initMap(){
