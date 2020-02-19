@@ -209,10 +209,19 @@ export default class Processor{
 		}
 		killed.r = killed.startPoint.r;
 		killed.c = killed.startPoint.c;
+
+		this.model.canRollToMove = false;
+		this.model.canRollToJump = false;
 	}
 
 	killHuman(killer, killed){
-		killer.money += 20000;
+		killer.money += 10000;
+		for (let i=0; i<this.model.board.players.length; i++){
+			let player = this.model.board.players[i];
+			if (player.state == "evil") {
+				player.money += 10000;
+			}
+		}
 		this.model.drawMode = "end";
 	}
 	
