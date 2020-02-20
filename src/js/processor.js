@@ -121,6 +121,8 @@ export default class Processor{
 				}
 				// this cell Type is turned into normal
 				cell.cellType = "normal";
+				// empty the curent player's action
+				this.model.curPlayer.actionPoints = 0;
 				// enable to roll dice one more time
 				this.model.canRollToMove = true;
 				
