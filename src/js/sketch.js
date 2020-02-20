@@ -9,6 +9,7 @@ import PlayerPaneUI from "./playerpane_ui";
 import InventoryPaneUI from "./inventorypane_ui";
 import GetRunePaneUI from "./getrunepane_ui";
 import SelectJumpRunePaneUI from "./select_jumprune_pane_ui";
+import EndGamePaneUI from "./endgamepane_ui";
 
 var mainui = new MainUI();
 console.log(mainui);
@@ -60,6 +61,10 @@ const sketch = p => {
 		selectjumprunepaneui.onSelectJumpRune = p.processor.onSelectJumpRune.bind(p.processor);
 		selectjumprunepaneui.onCancelJumpRune = p.processor.onCancelJumpRune.bind(p.processor);
 		mainui.addControl("selectjumprune", selectjumprunepaneui);
+
+		// end game mode
+		let endgamepaneui = new EndGamePaneUI(150,150,300,60);
+		mainui.addControl("end", endgamepaneui);
 
 		mainui.bind(model);	
 	}
