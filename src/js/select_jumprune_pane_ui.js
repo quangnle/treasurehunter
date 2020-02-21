@@ -12,8 +12,8 @@ export default class SelectJumpRunePaneUI{
 		
 		this.pane = new PaneUI(0,0,w,h,"Select Jump Rune");
 		this.slots = [];
-		for (let j=0;j<3;j++){
-			this.slots.push({"idx":-1, "x":20 + (j * 50), "y": 40, "w":50, "h":50});
+		for (let j=0;j<6;j++){
+			this.slots.push({"idx":-1, "x":20 + (j * 50), "y": 40, "w":50, "h":50, "selected":false});
 		}
 		this.btnOK = new ButtonUI(w - 180, h - 25, 80, 20, "OK","#aaa");
 		this.btnCancel = new ButtonUI(w - 90, h - 25, 80, 20, "Cancel","#aaa");
@@ -27,20 +27,27 @@ export default class SelectJumpRunePaneUI{
 		// draw message
 		window.p.textSize(12);
 		window.p.textAlign(window.p.CENTER, window.p.CENTER);
-		window.p.text("Do you want to use a rune for this jump? Current jump = " + this.model.dice, this.w >> 1, 30);
+		window.p.text("Current jump value is "+ this.model.dice +". Do you want to use a rune for this jump?", this.w >> 1, 30);
 		
 		let j = 0;
 		// draw rune's frame
 		for (let i=0; i<this.model.curPlayer.runes.length; i++){
 			if (this.model.curPlayer.runes[i].runeType == "jump"){
+				if (this.slots[j].selected) {
+					window.p.stroke("#0f0");
+				} else {
+					window.p.stroke("#000");
+				}
 				window.p.rect(20 + (j * 50), 40, 48, 48);
 				window.p.image(this.model.curPlayer.runes[i].img, 20 + (j * 50), 40, 46, 46);
-				if (j<3){
+				if (j<6){
 					this.slots[j].idx = i;
 				}
 				j++;
 			}
 		}
+
+		window.p.stroke("#000");
 
 		// draw buttons
 		this.btnOK.draw();
@@ -60,6 +67,9 @@ export default class SelectJumpRunePaneUI{
 			if (window.p.isInBound(pos, this.slots[i])){
 				console.log("selected rune",this.slots[i].idx);
 				this.selectedIndex = this.slots[i].idx;
+				this.slots[i].selected = true;
+			} else {
+				this.slots[i].selected = false;
 			}
 		}
 		

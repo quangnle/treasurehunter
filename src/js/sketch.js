@@ -57,7 +57,7 @@ const sketch = p => {
 		mainui.addControl("getrune", getrunepaneui);
 		
 		// select rune mode "selectjumprune"
-		let selectjumprunepaneui = new SelectJumpRunePaneUI(150,150,300,120);
+		let selectjumprunepaneui = new SelectJumpRunePaneUI(150,150,400,150);
 		selectjumprunepaneui.onSelectJumpRune = p.processor.onSelectJumpRune.bind(p.processor);
 		selectjumprunepaneui.onCancelJumpRune = p.processor.onCancelJumpRune.bind(p.processor);
 		mainui.addControl("selectjumprune", selectjumprunepaneui);
@@ -95,6 +95,10 @@ const sketch = p => {
 			p.processor.moveUp();
 		} else if (p.keyCode === p.DOWN_ARROW) {
 			p.processor.moveDown();
+		} else if (p.keyCode === 82) {
+			p.processor.cheatRune();
+		} else if (p.keyCode === 74) {
+			p.processor.cheatJump();
 		}
 	}
 }

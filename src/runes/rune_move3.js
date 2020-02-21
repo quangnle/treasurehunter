@@ -8,9 +8,9 @@ export default class RuneMove3{
 		this.img = window.p.loadImage(this.imgPath);
 	}
 	
-	apply(processor){
-		if (processor.gameState == "beforeRoll"){ //
-			processor.model.moveBuff = 3;
+	apply(){
+		if (window.p.processor.model.gameState == "beforeRoll"){ //
+			window.p.processor.model.moveBuff = 3;
 		}
 	}
 }

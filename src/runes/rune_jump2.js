@@ -9,7 +9,7 @@ export default class RuneJump2{
 	}
 	
 	apply(){
-		if (window.p.processor.gameState == "afterRoll"){ 
+		if (window.p.processor.model.gameState == "afterRoll"){ 
 			window.p.processor.model.jumpBuff = 2;
 			window.p.processor.teleport();
 		}

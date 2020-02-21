@@ -35,6 +35,7 @@ export default class MainUI {
 			if (window.p.isInBound({"x":mx, "y":my}, this.controls[this.model.drawMode][i])){
 				if (this.controls[this.model.drawMode][i].onClicked){
 					this.controls[this.model.drawMode][i].onClicked(mx,my);
+					break;
 				}
 			}
 		}

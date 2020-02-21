@@ -81,6 +81,19 @@ export default class Processor{
 			}
 		}
 	}
+
+	cheatRune(){
+		if (this.model.curPlayer.runes.length < 5){
+			let rnd = Math.floor(Math.random() * this.model.runes.length);
+			this.model.curPlayer.runes.push(this.model.runes[rnd]);
+		}
+	}
+
+	cheatJump(){
+		this.model.curPlayer.r = this.model.board.gateways[0].r;
+		this.model.curPlayer.c = this.model.board.gateways[0].c;
+		this.model.canRollToJump = true;
+	}
 	
 	enterCell(cell){		
 		let player = this.model.curPlayer;
@@ -121,8 +134,6 @@ export default class Processor{
 				}
 				// this cell Type is turned into normal
 				cell.cellType = "normal";
-				// empty the curent player's action
-				this.model.curPlayer.actionPoints = 0;
 				// enable to roll dice one more time
 				this.model.canRollToMove = true;
 				
@@ -187,10 +198,12 @@ export default class Processor{
 		if (idx >=0 ) {
 			idx = (this.model.dice + this.model.jumpBuff + idx) % this.model.board.gateways.length;
 			this.model.curPlayer.r = this.model.board.gateways[idx].r;
-			this.model.curPlayer.c = this.model.board.gateways[idx].c;
-			this.model.curPlayer.actionPoints = 0;
-			this.model.canRollToJump = false;
+			this.model.curPlayer.c = this.model.board.gateways[idx].c;			
 		}
+
+		this.model.jumpBuff = 0;
+		this.model.curPlayer.actionPoints = 0;
+		this.model.canRollToJump = false;
 	}
 
 	killEvil(killer, killed){
@@ -302,14 +315,16 @@ export default class Processor{
 		// }
 
 		// remove rune
-		this.model.curPlayer.runes.slice(id,1);
+		this.model.curPlayer.runes.splice(id,1);
 
 		console.log("after apply :",this.model.curPlayer);
-		this.teleport();
+		//this.teleport();
 		this.model.drawMode = "game";
 	}
 
 	onCancelJumpRune(){
+		this.teleport();
+		this.model.jumpBuff = 0;
 		this.model.drawMode = "game";
 	}
 	
