@@ -331,6 +331,8 @@ export default class Processor{
 	endTurn(){
 		this.model.curPlayerIdx = (this.model.curPlayerIdx + 1) % this.model.players.length;
 		this.model.curPlayer = this.model.players[this.model.curPlayerIdx];
+		this.model.jumpBuff = 0;
+		this.model.moveBuff = 0;
 		this.model.curPlayer.actionPoints = 0;
 		this.model.canRollToMove = true;		
 		this.model.receivedRune = null;		
@@ -348,7 +350,7 @@ export default class Processor{
 	}
 	
 	onUseRune(){
-		this.model.selectedRune.apply(this);
+		this.model.selectedRune.apply();
 
 		// remove rune from player's runes
 		let idx = -1;
