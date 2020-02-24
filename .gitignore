@@ -5,3 +5,5 @@ imgs/runes/.DS_Store
 *.DS_Store
 node_modules
 /.vs
+/online/server/.vs/TreasureHunter
+/online/server/packages
