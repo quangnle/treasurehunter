@@ -1,0 +1,6 @@
+1. vẫn chưa "ăn" được nhau
+2. player overlap lên nhau chỉ thấy mỗi một player
+3. mấy cái rune vẫn chưa apply được, xem lại 
+4. mấy cái message pane hiện ra vẫn còn giữ nguyên trạng thái khi lần thứ 2 mở ra thay vì refresh lại như mới (do model chưa refresh lại)
+5. chưa test select_jump_pane (chỉ hiện ra khi roll jump và trong invetory có các item liên quan đến jump, type = "jump")
+6. chưa test xài xong rune thì rune biến mất khỏi inventory của player
