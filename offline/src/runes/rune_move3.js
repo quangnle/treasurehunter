@@ -11,6 +11,8 @@ export default class RuneMove3{
 	apply(){
 		if (window.p.processor.model.gameState == "beforeRoll"){ //
 			window.p.processor.model.moveBuff = 3;
+			return true;
 		}
+		return false;
 	}
 }

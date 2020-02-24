@@ -27,5 +27,7 @@ export default class RuneGateway{
 		// set position to player
 		window.p.processor.model.curPlayer.r = window.p.processor.model.board.gateways[idx].r;
 		window.p.processor.model.curPlayer.c = window.p.processor.model.board.gateways[idx].c;
+
+		return true;
 	}
 }

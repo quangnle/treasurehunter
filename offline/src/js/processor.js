@@ -184,7 +184,6 @@ export default class Processor{
 	}
 	
 	teleport() {
-		
 		// get current gate index
 		let idx = -1;
 		for(let i=0; i<this.model.board.gateways.length; i++){
@@ -287,9 +286,19 @@ export default class Processor{
 	onAcceptRune(){
 		if (this.model.runes != null && this.model.runes.length > 0){
 			let rndIdx = Math.floor(Math.random() * this.model.runes.length); // randomly pick a rune in the rune collection
-			console.log("generating a rune for you :",rndIdx,this.model.runes[rndIdx]);
-			this.model.receivedRune = this.model.runes[rndIdx];
-			this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
+			console.log("generating a rune for you :", rndIdx, this.model.runes[rndIdx]);
+
+			if (this.model.runes[rndIdx].runeType == "luck"){
+				let canApply = this.model.runes[rndIdx].apply();
+				if (canApply){
+					//hehee					
+				}
+			} else {
+				this.model.receivedRune = this.model.runes[rndIdx];
+				this.model.curPlayer.runes.push(this.model.runes[rndIdx]);
+				
+			}
+
 			this.model.drawMode = "game";
 			this.model.canRollToMove = false;
 			this.model.canRollToJump = false;
@@ -303,19 +312,12 @@ export default class Processor{
 
 	onSelectJumpRune(id){
 		console.log("applying jump rune",this.model.curPlayer.runes[id])
-		this.model.curPlayer.runes[id].apply(this);
-		
-		// // remove rune from player's runes
-		// let myRunes = this.model.curPlayer.runes;
-		// if (id<myRunes.length){
-		// 	let lastRune = myRunes.pop();
-		// 	myRunes[id] = lastRune;
-		// }else{
-		// 	myRunes.pop();
-		// }
+		let canApply = this.model.curPlayer.runes[id].apply();
 
-		// remove rune
-		this.model.curPlayer.runes.splice(id,1);
+		if (canApply){
+			// remove rune
+			this.model.curPlayer.runes.splice(id,1);
+		}
 
 		console.log("after apply :",this.model.curPlayer);
 		//this.teleport();
@@ -350,18 +352,18 @@ export default class Processor{
 	}
 	
 	onUseRune(){
-		this.model.selectedRune.apply();
-
-		// remove rune from player's runes
-		let idx = -1;
-		for (let i=0; i<this.model.curPlayer.runes.length; i++){
-			if (this.model.curPlayer.runes[i].name == this.model.selectedRune.name){
-				idx = i;
-				break;
+		let canApply = this.model.selectedRune.apply();
+		if (canApply){
+			// remove rune from player's runes
+			let idx = -1;
+			for (let i=0; i<this.model.curPlayer.runes.length; i++){
+				if (this.model.curPlayer.runes[i].name == this.model.selectedRune.name){
+					idx = i;
+					break;
+				}
 			}
+			this.model.curPlayer.runes.splice(idx, 1);
 		}
-
-		this.model.curPlayer.runes.splice(idx, 1);
 	}
 	
 	//selecting a rune in the inventory

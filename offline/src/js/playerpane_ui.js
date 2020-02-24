@@ -15,26 +15,24 @@ export default class PlayerPaneUI{
 		window.p.translate(this.x, this.y);
 		
 		// draw panel
-		let pane = new PaneUI(0,0,this.w,this.h,"Player Info");
+		let pane = new PaneUI(0,0,this.w,this.h,"Player " + this.model.curPlayer.name);
 		pane.draw();
 		
-		// draw info
-		// current player's name
-		window.p.fill(0);
-		window.p.textSize(20);
-		window.p.textAlign(window.p.CENTER, window.p.CENTER);
-		window.p.text(this.model.curPlayer.name, 0.5*this.w, 35);
-		
 		// draw money
-		window.p.textSize(10);
+		window.p.textSize(15);
 		window.p.textAlign(window.p.LEFT, window.p.CENTER);
-		window.p.text("Money= $" + this.model.curPlayer.money, 0.1*this.w, 55);
+		window.p.text("Money= $" + this.model.curPlayer.money, 0.05*this.w, 35);
 
 		// draw action point
 		window.p.textSize(10);
 		window.p.textAlign(window.p.LEFT, window.p.CENTER);
-		window.p.text("Action Points= " + this.model.curPlayer.actionPoints, 0.1*this.w, 65);
-
+		if (this.model.moveBuff > 0) {
+			window.p.text("Action Points= " + this.model.curPlayer.actionPoints + " (+" + this.model.moveBuff + " buff)", 0.05*this.w, 50);
+		} else if (this.model.jumpBuff > 0) {
+			window.p.text("Action Points= " + this.model.curPlayer.actionPoints + " (+" + this.model.jumpBuff + " buff)", 0.05*this.w, 60);
+		} else {
+			window.p.text("Action Points= " + this.model.curPlayer.actionPoints, 0.05*this.w, 60);
+		}
 		//draw endturn btn
 		this.btnMove.draw();
 		

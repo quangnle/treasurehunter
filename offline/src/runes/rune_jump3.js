@@ -12,6 +12,8 @@ export default class RuneJump3{
 		if (window.p.processor.model.gameState == "afterRoll"){ 
 			window.p.processor.model.jumpBuff = 3;
 			window.p.processor.teleport();
+			return true;
 		}
+		return false;
 	}
 }

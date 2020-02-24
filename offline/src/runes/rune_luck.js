@@ -13,6 +13,8 @@ export default class RuneLuck{
 		for (let i=0; i<opponents.length;i++){
 			opponents.money -= 5000;
 			window.p.processor.model.curPlayer.money += 5000;
+			return true;
 		}
+		return false;
 	}
 }
