@@ -4,3 +4,4 @@ imgs/runes/.DS_Store
 .DS_Store
 *.DS_Store
 node_modules
+/.vs
